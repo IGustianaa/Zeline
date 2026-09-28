@@ -47,6 +47,11 @@ class Session:
     # yang tertunda. Diisi saat interrupt(), dibersihkan saat di-resume/di-drop.
     held_task: str | None = None
     held_at: float = 0.0
+    # Topik TERAKHIR yang dibahas user (bukan pesan pertama sesi). Diperbarui
+    # tiap turn agar "lanjut" merujuk ke pekerjaan terbaru, bukan sesi awal.
+    # Disimpan terpisah dari title karena title bisa stuck di pesan pertama.
+    last_topic: str = ""
+    last_topic_at: float = 0.0
 
 
 class SessionStore:

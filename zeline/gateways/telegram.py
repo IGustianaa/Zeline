@@ -3287,19 +3287,35 @@ def _dispatch_update(
             # deliberately checked first so /stop still escapes a question.
             if interaction.answer(identity, text):
                 return
-            # Message arrives while a turn is running → steer-first.
-            # Default behavior: inject the text into the running
-            # turn via sessions.steer() so the model sees it after the next
-            # tool call. NO interrupt, NO stop, NO new turn — the task
-            # keeps running undisturbed. User must explicitly /stop to kill.
-            #
-            # Ack message (English, terse): "⏩ Steered into current run."
-            # with optional status detail. Debounced: max 1 ack per 30s.
-            _progress = getattr(sessions, "progress", None)
-            prog = _progress(identity) if callable(_progress) else None
+            # Pesan tiba saat turn LAIN masih berjalan → mid-turn steering, mirip
+            # Hermes. Klasifikasi:
+            #   • MENDESAK (perintah/koreksi/urgensi) → interupsi task berjalan,
+            #     tampilkan banner "⚡ Interrupting…", lalu jalankan pesan ini
+            #     sebagai turn baru duluan.
+            #   • BIASA (pertanyaan santai) → sisipkan sebagai steer guidance;
+            #     turn berjalan menyerapnya, tidak diinterupsi.
+            prog = sessions.progress(identity)
             if prog is not None:
-                steered = sessions.steer(identity, text)
-                if steered:
+                if sessions.classify_steer(text):
+                    interrupted = sessions.interrupt(identity, text)
+                    if interrupted is not None:
+                        it, mx, elapsed = interrupted
+                        mins = int(elapsed // 60)
+                        secs = int(elapsed % 60)
+                        el = f"{mins}m {secs}s" if mins else f"{secs}s"
+                        iter_str = f", iteration {it}/{mx}" if mx else ""
+                        _api_call(
+                            api, "sendMessage", chat_id=chat_id_int,
+                            text=f"⚡ Interrupting current task ({el} elapsed{iter_str}). "
+                                 "Working on your message now.",
+                        )
+                    # jalankan pesan mendesak sebagai turn baru (turn lama sudah
+                    # dibatalkan; SessionStore.send serial via lock, jadi ia
+                    # menunggu turn lama benar-benar lepas lalu jalan).
+                    _start_agent_reply(api, sessions, chat_id=chat_id_int, identity=identity, text=text, tool_profile=tool_profile, reply_to_message_id=incoming_message_id)
+                    return
+                # pesan biasa saat sibuk → steer (turn berjalan menyerapnya)
+                if sessions.steer(identity, text):
                     # Debounce ack: don't spam user with ack on every steer
                     _now = time.monotonic()
                     if _now - _steer_ack_ts.get(identity, 0.0) >= _STEER_ACK_INTERVAL:
@@ -3313,7 +3329,7 @@ def _dispatch_update(
                         detail = f" ({', '.join(parts)})" if parts else ""
                         _api_call(
                             api, "sendMessage", chat_id=chat_id_int,
-                            text=f"⏩ Steered into current run{detail}. "
+                            text=f"✈️ Steered into current run{detail}. "
                                  "Your message arrives after the next tool call.",
                         )
                         _steer_ack_ts[identity] = _now
