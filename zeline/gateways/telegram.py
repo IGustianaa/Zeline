@@ -3287,8 +3287,8 @@ def _dispatch_update(
             # deliberately checked first so /stop still escapes a question.
             if interaction.answer(identity, text):
                 return
-            # Pesan tiba saat turn LAIN masih berjalan → mid-turn steering, mirip
-            # Hermes. Klasifikasi:
+            # Pesan tiba saat turn LAIN masih berjalan → mid-turn steering.
+            # Klasifikasi:
             #   • MENDESAK (perintah/koreksi/urgensi) → interupsi task berjalan,
             #     tampilkan banner "⚡ Interrupting…", lalu jalankan pesan ini
             #     sebagai turn baru duluan.
@@ -3297,7 +3297,10 @@ def _dispatch_update(
             prog = sessions.progress(identity)
             if prog is not None:
                 if sessions.classify_steer(text):
-                    interrupted = sessions.interrupt(identity, text)
+                    # Ingat task yang sedang dikerjakan (judul sesi = teks task
+                    # yang lagi jalan) supaya Zeline bisa menawarkan lanjut nanti.
+                    held = sessions.session_title(identity)
+                    interrupted = sessions.interrupt(identity, text, held_task=held)
                     if interrupted is not None:
                         it, mx, elapsed = interrupted
                         mins = int(elapsed // 60)
@@ -3311,8 +3314,20 @@ def _dispatch_update(
                         )
                     # jalankan pesan mendesak sebagai turn baru (turn lama sudah
                     # dibatalkan; SessionStore.send serial via lock, jadi ia
-                    # menunggu turn lama benar-benar lepas lalu jalan).
-                    _start_agent_reply(api, sessions, chat_id=chat_id_int, identity=identity, text=text, tool_profile=tool_profile, reply_to_message_id=incoming_message_id)
+                    # menunggu turn lama benar-benar lepas lalu jalan). Sisipkan
+                    # pengingat task tertunda ke system_extra supaya Zeline INGAT
+                    # dan menawarkan melanjutkannya di akhir jawaban.
+                    held_now = sessions.held_task(identity)
+                    extra = ""
+                    if held_now:
+                        extra = (
+                            "\n\n[CATATAN RUNTIME — task tertunda]\n"
+                            f"Sebelum pesan mendesak ini, kamu sedang mengerjakan: \"{held_now}\".\n"
+                            "Task itu DIHOLD, belum selesai. Setelah menyelesaikan pesan "
+                            "sekarang, INGAT untuk menawarkan melanjutkannya kembali "
+                            "(mis. \"Mau lanjutin <task tertunda> yang tadi?\"). Jangan lupakan."
+                        )
+                    _start_agent_reply(api, sessions, chat_id=chat_id_int, identity=identity, text=text, tool_profile=tool_profile, reply_to_message_id=incoming_message_id, system_extra=extra)
                     return
                 # pesan biasa saat sibuk → steer (turn berjalan menyerapnya)
                 if sessions.steer(identity, text):
