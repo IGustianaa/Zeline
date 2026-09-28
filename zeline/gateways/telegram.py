@@ -14,7 +14,7 @@ import threading
 import time
 import zipfile
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
 from urllib.parse import urlparse
 
 import requests
@@ -1001,6 +1001,7 @@ def _start_working_heartbeat(
     *,
     interval: float = 4.0,
     status: "_LiveStatus | None" = None,
+    cancelled: "Callable[[], bool] | None" = None,
 ) -> threading.Thread:
     """Jaga indikator 'typing…' tetap hidup selama agent bekerja.
 
@@ -1015,6 +1016,10 @@ def _start_working_heartbeat(
 
     def heartbeat() -> None:
         while not done.wait(interval):
+            # /stop ditekan: hentikan 'typing…' SEKETIKA, jangan tampak masih
+            # mengetik setelah konfirmasi Stopped terkirim.
+            if cancelled and cancelled():
+                break
             try:
                 _api_call(api, "sendChatAction", chat_id=chat_id, action="typing",
                           timeout=_PROGRESS_TIMEOUT, attempts=_PROGRESS_ATTEMPTS)
@@ -1871,17 +1876,15 @@ def _handle_command_update(
         _api_call(api, "sendMessage", chat_id=chat_id, text=picker_text, reply_markup=markup)
         return True
     if command == "/stop":
-        status = sessions.status(identity)
         stopped = sessions.stop(identity)
-        title = str(status.get("title") or "Active task").strip()
         if stopped:
             _note_stop(identity)
-            # SATU pesan saja. Turn yang dibatalkan TIDAK ikut mengirim
-            # "Stopped." (lihat _send_agent_reply) dan refleksi dilewati, jadi
-            # inilah satu-satunya balasan untuk /stop.
+            # SATU pesan saja, TANPA judul sesi (judul = teks pesan user, tidak
+            # perlu digemakan balik). Turn yang dibatalkan tidak ikut mengirim
+            # "Stopped." (lihat _send_agent_reply) dan refleksi dilewati.
             reply = (
-                f"❄️ Stopped — {title}\n"
-                "The running step was force-killed. Session and history are intact."
+                "❄️ Stopped — The running step was force-killed. "
+                "Session and history are intact."
             )
         elif _stopped_recently(identity):
             # /stop kedua (dobel-tap, atau update yang sama dikirim ulang
@@ -2875,7 +2878,15 @@ def _send_agent_reply(api: str, sessions, *, chat_id: int, identity: str, text: 
               timeout=_PROGRESS_TIMEOUT, attempts=_PROGRESS_ATTEMPTS)
     done = threading.Event()
     live = _LiveStatus(api, chat_id, model=getattr(config, "MODEL", ""))
-    heartbeat = _start_working_heartbeat(api, chat_id, done, status=live)
+    # Predikat pembatalan: begitu /stop menandai sesi, heartbeat & callback UI
+    # langsung diam (tidak menunggu turn unwind). Inilah yang bikin /stop terasa
+    # 'beneran berhenti', bukan 'masih mengetik' beberapa detik.
+    def _is_cancelled() -> bool:
+        try:
+            return sessions.is_cancelled(identity)
+        except Exception:
+            return False
+    heartbeat = _start_working_heartbeat(api, chat_id, done, status=live, cancelled=_is_cancelled)
     # CATATAN: streaming/live-edit token (edit satu bubble berulang) DIMATIKAN.
     # Di Android bubble yang di-edit terus makin berat/lag makin panjang, dan
     # markdown setengah jadi (##) sempat keliatan mentah. Alur yang diminta
@@ -2883,6 +2894,8 @@ def _send_agent_reply(api: str, sessions, *, chat_id: int, identity: str, text: 
     # rapi — narasi & jawaban akhir masing-masing jadi bubble utuh sendiri
     # (tidak ada edit-in-place), diselingi feed aktivitas tool.
     def on_tool(_name, _args):
+        if _is_cancelled():
+            return
         _api_call(api, "sendChatAction", chat_id=chat_id, action="typing",
                   timeout=_PROGRESS_TIMEOUT, attempts=_PROGRESS_ATTEMPTS)
         # Tambahkan satu baris ringkas ke feed live, bukan pesan baru.
@@ -2908,6 +2921,8 @@ def _send_agent_reply(api: str, sessions, *, chat_id: int, identity: str, text: 
                 _render_ask_question(api, chat_id, entry)
 
     def on_tool_result(_name, _args, result):
+        if _is_cancelled():
+            return
         result_text = _tool_result_text(_name, _args, result)
         if result_text:
             live.add(_safe_progress_line(result_text))
@@ -2915,6 +2930,8 @@ def _send_agent_reply(api: str, sessions, *, chat_id: int, identity: str, text: 
         live.set_waiting()
 
     def on_iteration(current, maximum):
+        if _is_cancelled():
+            return
         # Awal tiap iterasi = mulai menunggu respons provider. Simpan nomor
         # langkah supaya header status bisa menunjukkan 'step 4/20'.
         live.set_iteration(current, maximum)
@@ -2927,6 +2944,8 @@ def _send_agent_reply(api: str, sessions, *, chat_id: int, identity: str, text: 
         # [penjelasan] → [jawaban], tiap pesan rapi dan dikirim sekali (bukan
         # di-edit live). Selesaikan dulu bubble progres berjalan biar narasi
         # baru tampil di bawah aktivitas tool sebelumnya, bukan menimpanya.
+        if _is_cancelled():
+            return
         sentence = sentence.strip()
         if not sentence:
             return

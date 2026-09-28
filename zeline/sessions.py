@@ -233,6 +233,18 @@ class SessionStore:
             session.steer_queue.append(guidance)
             return True
 
+    def is_cancelled(self, identity: str) -> bool:
+        """True kalau turn sesi ini sudah diminta berhenti (/stop).
+
+        Dipakai gateway agar heartbeat 'typing…' dan callback UI (on_tool,
+        on_narration) LANGSUNG diam begitu /stop ditekan — tidak menunggu turn
+        selesai unwind. Inilah yang bikin /stop terasa 'beneran berhenti', bukan
+        'masih mengetik' beberapa detik setelah konfirmasi.
+        """
+        with self._lock:
+            session = self._sessions.get(identity)
+            return bool(session is not None and session.cancel_event.is_set())
+
     def reset(self, identity: str) -> bool:
         with self._lock:
             session = self._sessions.pop(identity, None)
