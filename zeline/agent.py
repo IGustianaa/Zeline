@@ -258,16 +258,32 @@ class Zeline:
             + f"\n\nActive runtime (non-secret): model={self.model}; protocol={self.protocol}; profile={self.executor.profile}. "
             + "\n\nSimpan fakta jangka panjang yang benar-benar berguna memakai add_memory. "
             "Jika tugas sesuai skill yang tersedia, panggil load_skill terlebih dahulu. "
-            "\n\nSelf-identity (answer cleanly, don't ramble or leak infra): you are "
-            "Zeline, an agentic AI framework by Zerolinear. When asked what model "
-            "you are, state the configured model id plainly (call runtime_info) in "
-            "ONE short line, e.g. 'Zeline (model: <id>).' Do NOT speculate about "
-            "the 'real' model behind any relay/router, do NOT reveal or guess the "
-            "provider base URL, host, port, proxy, or relay name (e.g. localhost "
-            "addresses), and do NOT add disclaimers about labels not proving the "
-            "underlying model. The model id and protocol are not secret; API keys, "
-            "tokens, base URLs, hosts, and any other infrastructure detail are — "
-            "never disclose them."
+            "\n\nSelf-identity (ALWAYS know this — answer cleanly, don't ramble or "
+            "leak infra):\n"
+            f"- Your chat/bot name: {config.NAME} (the name the operator gave you; "
+            "this is how users address you in conversation).\n"
+            "- Your agent framework: Zeline — an open-source agentic AI framework. "
+            "Zeline is who you ARE at the core, regardless of what chat name is set. "
+            "You are an instance of Zeline running on this device.\n"
+            "- Your lab/creator: Zerolinear — the team/lab that built and maintains "
+            "Zeline. When asked 'who made you', 'who is behind this', 'siapa yang "
+            "bikin', the answer is Zerolinear.\n"
+            "- When asked 'what is Zeline' → Zeline is an open-source agentic AI "
+            "framework by Zerolinear. It gives AI models real tools (terminal, "
+            "browser, files, code, memory, skills) so they can actually execute "
+            "tasks, not just chat.\n"
+            "- When asked 'what is Zerolinear' → Zerolinear is the lab that builds "
+            "Zeline. They focus on agentic AI — making AI that does real work.\n"
+            "- These are FACTS about yourself. Never say 'I don't know what Zeline "
+            "is' or 'I'm not sure about Zerolinear'. You ARE Zeline by Zerolinear.\n"
+            "- When asked what model you are, state the configured model id plainly "
+            "(call runtime_info) in ONE short line, e.g. 'I'm running on <model_id>.' "
+            "Do NOT speculate about the 'real' model behind any relay/router, do NOT "
+            "reveal or guess the provider base URL, host, port, proxy, or relay name "
+            "(e.g. localhost addresses), and do NOT add disclaimers about labels not "
+            "proving the underlying model. The model id and protocol are not secret; "
+            "API keys, tokens, base URLs, hosts, and any other infrastructure detail "
+            "are — never disclose them."
         )
 
     def _refresh_system_prompt(self) -> None:
@@ -822,6 +838,7 @@ class Zeline:
         take_steer: Callable[[], str | None] | None = None,
         on_narration: Callable[[str], None] | None = None,
         on_stream_delta: Callable[[str], None] | None = None,
+        turn_extra: str = "",
     ) -> str:
         text = user_input.strip()
         if not text:
@@ -837,7 +854,11 @@ class Zeline:
         self._drop_incomplete_tail()
         self._trim_history()
         self._should_stop = should_stop
-        self._turn_skill_context = ""
+        # ``turn_extra`` = catatan runtime sekali-pakai untuk turn ini saja (mis.
+        # pengingat task tertunda setelah interupsi). Ditaruh di skill-context
+        # ephemeral: masuk ke payload provider turn ini, TIDAK dipersist ke
+        # history — jadi tidak merusak cache percakapan lintas turn.
+        self._turn_skill_context = str(turn_extra or "").strip()
         self._turn_cloudflare_detected = False
         skill_names: list[str] = []
         if _DAILY_CHECKIN_INTENT_RE.search(text):
@@ -856,7 +877,12 @@ class Zeline:
             )
             if not loaded.startswith("ERROR"):
                 loaded_contexts.append(f"## Auto-loaded skill: {skill_name}\n{loaded}")
-        self._turn_skill_context = "\n\n".join(loaded_contexts)
+        # Gabungkan skill auto-load dengan turn_extra (pengingat task tertunda,
+        # dll) yang sudah diset di atas — jangan sampai menimpanya.
+        _base_extra = self._turn_skill_context
+        self._turn_skill_context = "\n\n".join(
+            part for part in ([_base_extra] + loaded_contexts) if part
+        )
         self.messages.append({"role": "user", "content": text})
         self.last_turn_tool_calls = 0
         try:

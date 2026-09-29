@@ -7,6 +7,7 @@ Satu gateway process menangani banyak chat secara concurrent. Store ini:
 """
 from __future__ import annotations
 
+import re
 import threading
 import time
 import uuid
@@ -34,6 +35,18 @@ class Session:
     session_id: str = field(default_factory=lambda: f"zel-{uuid.uuid4().hex[:8]}")
     title: str = "New Session"
     created_at: float = field(default_factory=time.time)
+    # Progres turn yang sedang berjalan — dipakai banner interupsi ("⚡
+    # Interrupting current task, iteration N/M, X elapsed") saat pesan mendesak
+    # datang di tengah kerja. Diperbarui lewat on_iteration.
+    turn_started: float = 0.0
+    current_iteration: int = 0
+    current_max: int = 0
+    # Task yang di-HOLD karena diinterupsi pesan mendesak. Disimpan agar Zeline
+    # ingat & bisa menawarkan melanjutkannya setelah pesan mendesak selesai —
+    # seperti asisten yang tidak lupa pekerjaan yang ditunda. None = tidak ada
+    # yang tertunda. Diisi saat interrupt(), dibersihkan saat di-resume/di-drop.
+    held_task: str | None = None
+    held_at: float = 0.0
 
 
 class SessionStore:
@@ -146,16 +159,30 @@ class SessionStore:
                 with self._lock:
                     return session.steer_queue.pop(0) if session.steer_queue else None
 
+            def track_iteration(iteration: int, maximum: int) -> None:
+                # Rekam progres turn untuk banner interupsi; teruskan ke callback
+                # UI kalau ada.
+                with self._lock:
+                    session.current_iteration = iteration
+                    session.current_max = maximum
+                if on_iteration:
+                    on_iteration(iteration, maximum)
+
             try:
+                with self._lock:
+                    session.turn_started = time.monotonic()
+                    session.current_iteration = 0
+                    session.current_max = 0
                 reply = session.agent.send(
                     text,
                     on_tool=on_tool,
                     on_tool_result=on_tool_result,
-                    on_iteration=on_iteration,
+                    on_iteration=track_iteration,
                     should_stop=session.cancel_event.is_set,
                     take_steer=take_steer,
                     on_narration=on_narration,
                     on_stream_delta=on_stream_delta,
+                    turn_extra=system_extra,
                 )
                 session.last_used = time.monotonic()
                 # Simpan history ke disk setelah tiap turn sukses → bertahan
@@ -177,6 +204,13 @@ class SessionStore:
                 with self._lock:
                     session.running = False
                     session.steer_queue.clear()
+                    # Kalau turn ini membawa pengingat task tertunda (system_extra
+                    # dari interupsi), lepas penandanya setelah selesai — Zeline
+                    # sudah diberi kesempatan menawarkan lanjut, jadi jangan
+                    # mengingatkan berulang di turn-turn berikutnya.
+                    if system_extra:
+                        session.held_task = None
+                        session.held_at = 0.0
 
     def stop(self, identity: str) -> bool:
         with self._lock:
@@ -232,6 +266,92 @@ class SessionStore:
                 return False
             session.steer_queue.append(guidance)
             return True
+
+    #: Penanda pesan mendesak yang harus MENGINTERUPSI task berjalan (bukan
+    #: sekadar disisipkan sebagai catatan). Cocokkan sebagai kata utuh, case-
+    #: insensitive. User bisa menambah lewat config nanti; untuk sekarang daftar
+    #: ini menutup mayoritas "stop/ganti/prioritas/sekarang".
+    _URGENT_STEER_PATTERNS = (
+        r"\bstop\b", r"\bberhenti\b", r"\bbatal\b", r"\bcancel\b",
+        r"\bganti\b", r"\bubah\b",
+        r"\bprioritas\w*\b", r"\bduluan\b",
+        r"\bcepet\b", r"\bcepat\b", r"\burgent\b",
+        r"\btunggu\s+dulu\b", r"\bjangan\b",
+        r"\bsalah\b", r"\bbukan\b", r"\bmalah\b",
+        r"\bkoreksi\b", r"\brevisi\b", r"\bhentikan\b",
+    )
+
+    def classify_steer(self, text: str) -> bool:
+        """True kalau pesan mid-turn ini MENDESAK (harus interupsi task).
+
+        Heuristik murni (tanpa API call, sesuai preferensi murah/instan):
+        pesan yang memuat kata perintah/koreksi/urgensi dianggap mendesak dan
+        akan menginterupsi turn berjalan. Pertanyaan biasa ("btw harga eth
+        berapa") tidak cocok → diperlakukan sebagai steer biasa (menunggu).
+        """
+        low = f" {text.strip().lower()} "
+        return any(re.search(p, low) for p in self._URGENT_STEER_PATTERNS)
+
+    def progress(self, identity: str) -> tuple[int, int, float] | None:
+        """(iteration, max_iteration, elapsed_seconds) turn berjalan, atau None."""
+        with self._lock:
+            session = self._sessions.get(identity)
+            if session is None or not session.running:
+                return None
+            elapsed = (time.monotonic() - session.turn_started) if session.turn_started else 0.0
+            return (session.current_iteration, session.current_max, elapsed)
+
+    def interrupt(self, identity: str, text: str, *, held_task: str | None = None) -> tuple[int, int, float] | None:
+        """Interupsi turn berjalan agar pesan MENDESAK dikerjakan lebih dulu.
+
+        Mengembalikan progres turn yang diinterupsi (iteration, max, elapsed)
+        untuk banner "⚡ Interrupting…", atau None kalau tidak ada turn berjalan.
+        ``held_task`` (teks task yang sedang dikerjakan) disimpan agar Zeline
+        INGAT pekerjaan yang ditunda dan bisa menawarkan melanjutkannya nanti.
+        Turn berjalan dibatalkan agar pesan mendesak jalan segera sebagai turn
+        baru.
+        """
+        with self._lock:
+            session = self._sessions.get(identity)
+            if session is None or not session.running:
+                return None
+            elapsed = (time.monotonic() - session.turn_started) if session.turn_started else 0.0
+            prog = (session.current_iteration, session.current_max, elapsed)
+            # Ingat task yang ditunda (kalau ada & belum ada yang tersimpan).
+            if held_task:
+                session.held_task = held_task.strip()[:500]
+                session.held_at = time.monotonic()
+            session.cancel_event.set()
+            agent = getattr(session, "agent", None)
+            if agent is not None and hasattr(agent, "force_cancel"):
+                try:
+                    agent.force_cancel()
+                except Exception:
+                    pass
+            return prog
+
+    def held_task(self, identity: str) -> str | None:
+        """Task yang sedang di-HOLD karena interupsi, atau None. Read-only."""
+        with self._lock:
+            session = self._sessions.get(identity)
+            return session.held_task if session is not None else None
+
+    def session_title(self, identity: str) -> str | None:
+        """Judul sesi berjalan (≈ teks task yang sedang dikerjakan), atau None."""
+        with self._lock:
+            session = self._sessions.get(identity)
+            if session is None:
+                return None
+            title = (session.title or "").strip()
+            return title if title and title != "New Session" else None
+
+    def clear_held_task(self, identity: str) -> None:
+        """Lepas penanda task tertunda (setelah di-resume atau di-drop)."""
+        with self._lock:
+            session = self._sessions.get(identity)
+            if session is not None:
+                session.held_task = None
+                session.held_at = 0.0
 
     def reset(self, identity: str) -> bool:
         with self._lock:
