@@ -89,13 +89,14 @@ _CONTINUATION_WORDS = {
 }
 
 #: Umur maksimal turn TERBARU agar "lanjut" masih dianggap punya rujukan.
-#:
+#: Umur maksimal turn TERBARU agar "lanjut" masih dianggap punya rujukan.
 #: ``append_turn`` baru jalan SETELAH reply, jadi saat user mengetik "lanjut"
-#: di sesi baru, baris terbaru di archive masih milik sesi SEBELUMNYA. Tanpa
+#: di sesi baru, baris terbaru di archive masih milik sesi sebelumnya. Tanpa
 #: batas ini, "lanjut" pagi ini me-recall pekerjaan semalam seolah itu yang
-#: sedang berjalan. 6 jam menampung jeda tidur/kerja tapi tetap memisahkan
-#: sesi yang berbeda hari.
-_CONTINUATION_STALE_AFTER = 6 * 3600
+#: sedang dikerjakan. Diperpanjang ke 24 jam: gateway restart bisa terjadi
+#: kapan saja, dan user tetap berhak melanjutkan pekerjaan terakhirnya
+#: selama masih dalam hari yang sama.
+_CONTINUATION_STALE_AFTER = 24 * 3600
 
 #: Budget digest ``_recall_history``: maksimal karakter per thread dan total.
 #: Menjaga output recall tidak meledakkan context window walau archive besar.

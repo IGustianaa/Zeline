@@ -226,7 +226,7 @@ class RecallHistoryToolTests(_ArchiveFixture):
         Jalur kontinuasi tidak boleh menyodorkan itu sebagai konteks aktif —
         dan tidak boleh jatuh ke ``recent_archive`` yang mengabaikan batas sesi.
         """
-        old = self.now - 8 * 3600
+        old = self.now - 25 * 3600  # lebih tua dari _CONTINUATION_STALE_AFTER (24 jam)
         self.seed("user", "bikin veo-chat fastapi", "hy", old)
         self.seed("assistant", "veo-chat: pip lambat, install manual", "hy", old + 60)
         out = self._executor()._recall_history("lanjut")
