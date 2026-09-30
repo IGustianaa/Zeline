@@ -313,6 +313,34 @@ def _update_task(task: str, status: str, identity: str) -> str:
     return f"{prefix}{tasks.render(board)}"
 
 
+def task_progress_summary(identity: str) -> str:
+    """Ringkasan progress task board untuk ditampilkan di UI.
+
+    Format: "📋 Updating tasks planning 6 task(s) — 2 completed, 3 remaining, 1 in progress"
+    Dipakai oleh gateway untuk menampilkan progress nyata, bukan cuma "Updating tasks".
+    """
+    try:
+        items = tasks.load(identity)
+    except Exception:
+        return "📋 Updating tasks"
+    if not items:
+        return "📋 Updating tasks (no active tasks)"
+    total = len(items)
+    completed = sum(1 for i in items if i["status"] == "completed")
+    in_progress = sum(1 for i in items if i["status"] == "in_progress")
+    pending = sum(1 for i in items if i["status"] == "pending")
+    cancelled = sum(1 for i in items if i["status"] == "cancelled")
+    remaining = total - completed - cancelled
+    parts = [f"planning {total} task(s)"]
+    if completed:
+        parts.append(f"{completed} completed")
+    if remaining:
+        parts.append(f"{remaining} remaining")
+    if in_progress:
+        parts.append(f"{in_progress} in progress")
+    return f"📋 Updating tasks {', '.join(parts)}"
+
+
 def _search_files(query: str, workspace: Path, pattern: str = "*") -> str:
     try:
         matches = []

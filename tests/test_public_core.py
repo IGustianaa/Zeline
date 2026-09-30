@@ -2479,8 +2479,8 @@ class ZelinePublicCoreTests(unittest.TestCase):
         self.assertNotIn("Saving", rm_label)
         self.assertEqual(telegram._tool_progress_text("system_env", {}), "🧰 Checking system environment")
         task = telegram._tool_progress_text("update_task", {"task": "Run tests", "status": "in_progress"})
-        # Satu baris, tanpa newline.
-        self.assertEqual(task, "📋 Updating tasks")
+        # Satu baris, tanpa newline. Sekarang include task + status.
+        self.assertEqual(task, "📋 Updating tasks <code>Run tests</code> → in_progress")
         self.assertNotIn("\n", task)
 
     def test_telegram_terminal_progress_has_no_title_or_emoji(self):

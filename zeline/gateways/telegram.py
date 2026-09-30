@@ -439,6 +439,13 @@ def _tool_progress_text(name: str, arguments: dict[str, Any]) -> str:
         query = html.escape(str(arguments.get("query", ""))[:120], quote=False)
         return f"🔎 Searching files for {query}" if query else "🔎 Searching files"
     if name == "update_task":
+        # Tampilkan task + status dari arguments. Progress board nyata
+        # (completed/remaining) tidak bisa dihitung di sini karena identity
+        # tidak tersedia — itu dipanggil terpisah via task_progress_summary.
+        task_desc = html.escape(str(arguments.get("task", ""))[:80], quote=False)
+        status = str(arguments.get("status", "")).strip()
+        if task_desc and status:
+            return f"📋 Updating tasks <code>{task_desc}</code> → {status}"
         return "📋 Updating tasks"
     if name == "undo_file":
         action = str(arguments.get("action", "")).strip().lower()
