@@ -1,4 +1,41 @@
 # Changelog
+## [0.3.6] — 2026-09-30
+
+### Added
+- **Connectors framework** — base class + registry for external services ([#286]).
+- **GitHub connector** — issues, PRs, repos via API ([#286]).
+- **Google connector** — Gmail, Calendar, Sheets, Drive ([#288]).
+- **WhatsApp connector** — Business Cloud API (send_text, send_template) ([#289]).
+- **Media tools batch** — `tts`, `qr_code`, `transcribe_audio`, `pdf_tool` ([#285]).
+- **Edit video tool** — ffmpeg CapCut-style operations (trim, crop, text, speed) ([#284]).
+- **Edit image tool** — provider `/images/edits` ([#283]).
+- **Generate video tool** — Veo text-to-video ([#282]).
+- **Hermes-parity batch** — proactive briefing, memory nudges, skill curator, recall digest, crypto wallet fix ([#281]).
+- **Provider API key pools** — multiple keys with automatic rotation ([#280]).
+- **New bundled skills**: `voice-reply` ([#275]), `file-converter` ([#271]), `video-downloader` ([#270]), `airdrop-manager` ([#269]).
+
+### Changed
+- **Mid-turn steering**: urgent message interrupts running task with banner; ordinary message injected as steer guidance ([#273]).
+- **Task progress indicator**: `📋 Updating tasks <code>X</code> → status` ([#290]).
+- **Narration fallback**: silent models now narrate before executing tools ([#290]).
+- **/stop behavior**: progress bubble finalized (not deleted) so user can still see context ([#290]).
+- **/update reliability**: retry 3x with backoff + health-check after gateway restart ([#291]).
+- **Reasoning-content fallback**: thinking models no longer return empty replies ([#276]).
+
+### Fixed
+- **Telegram flood-ban**: honor `429 retry_after`, throttle progress edits ([#272]).
+- **Telegram cache-bust**: egress-proxy cache on getUpdates polling ([#287]).
+- **Reply-to context**: quoted message text injected as `[Replying to: "..."]` ([#272]).
+- **Self-identity**: Zeline knows it is Zeline by Zerolinear ([#272]).
+- **Web search UA**: r.jina.ai proxy accepts bot UA ([#272]).
+- **QR code dependency**: `qrcode[pil]` declared ([#285]).
+- **Session amnesia**: `last_topic` tracking — "lanjut" refers to most recent topic, not session start ([#290]).
+- **Steer icon**: ⏩ → ✈️ ([#290]).
+- **Stop message**: `❄️ Stopped — <title>` only, no extra description ([#290]).
+- **classify_steer**: context-aware (HARD vs SHORT patterns) — "jangan" in long refinement no longer triggers false interrupt ([#290]).
+- **_consume_stop**: actually consumes entry so next turn not blocked ([#290]).
+- **on_narration guard**: skip send if cancel_event set ([#290]).
+
 ## [0.3.5] — 2026-09-29
 
 ### Added
