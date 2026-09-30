@@ -1134,23 +1134,6 @@ class Zeline:
             self.last_turn_tool_calls += len(tool_calls)
             self._tool_calls_since_reflection += len(tool_calls)
 
-            # Narasi live: teks yang menyertai tool call (mis. "Gua cek dulu
-            # konfignya lalu benerin") adalah kalimat rencana model. Kirim ke
-            # user sebagai bubble tersendiri SEBELUM tool jalan — inilah yang
-            # bikin alurnya kebaca seperti Zeline (bubble penjelasan →
-            # terminal → temuan), bukan diam lalu tiba-tiba dump panjang.
-            narration = str(message.get("content") or "").strip()
-            if narration and on_narration:
-                on_narration(narration)
-
-            # Urutan ini wajib untuk OpenAI-compatible tool calling.
-            self.messages.append(
-                {
-                    "role": "assistant",
-                    "content": message.get("content") or "",
-                    "tool_calls": tool_calls,
-                }
-            )
             # Parse setiap tool call sekali (nama + argumen) dengan urutan dijaga.
             parsed_calls: list[tuple[dict[str, Any], str, dict[str, Any]]] = []
             for tool_call in tool_calls:
@@ -1163,6 +1146,58 @@ class Zeline:
                 except json.JSONDecodeError:
                     args = {}
                 parsed_calls.append((tool_call, name, args))
+
+            # Narasi live: teks yang menyertai tool call (mis. "Gua cek dulu
+            # konfignya lalu benerin") adalah kalimat rencana model. Kirim ke
+            # user sebagai bubble tersendiri SEBELUM tool jalan — inilah yang
+            # bikin alurnya kebaca seperti Zeline (bubble penjelasan →
+            # terminal → temuan), bukan diam lalu tiba-tiba dump panjang.
+            narration = str(message.get("content") or "").strip()
+            if not narration and parsed_calls:
+                # Fallback: beberapa model langsung tool_calls tanpa teks.
+                # Generate narasi singkat dari tool pertama agar user tetap
+                # tahu apa yang sedang dikerjakan — bukan diam lalu eksekusi.
+                first_name = parsed_calls[0][1] if parsed_calls else "tool"
+                first_args = parsed_calls[0][2] if parsed_calls else {}
+                if first_name == "run_shell":
+                    cmd = str(first_args.get("command", ""))[:80]
+                    narration = f"Running: {cmd}" if cmd else "Running terminal command…"
+                elif first_name == "read_file":
+                    path = str(first_args.get("path", ""))[:60]
+                    narration = f"Reading {path}…" if path else "Reading file…"
+                elif first_name == "write_file":
+                    path = str(first_args.get("path", ""))[:60]
+                    narration = f"Writing {path}…" if path else "Writing file…"
+                elif first_name == "patch_file":
+                    path = str(first_args.get("path", ""))[:60]
+                    narration = f"Patching {path}…" if path else "Patching file…"
+                elif first_name == "search_files":
+                    query = str(first_args.get("query", first_args.get("pattern", "")))[:50]
+                    narration = f"Searching: {query}…" if query else "Searching files…"
+                elif first_name == "execute_code":
+                    narration = "Executing Python code…"
+                elif first_name == "update_task":
+                    task = str(first_args.get("task", ""))[:60]
+                    status = str(first_args.get("status", ""))
+                    narration = f"📋 {task} → {status}" if task else "Updating task board…"
+                elif first_name == "delegate_task":
+                    goal = str(first_args.get("goal", ""))[:80]
+                    narration = f"Delegating: {goal}…" if goal else "Delegating to sub-agent…"
+                elif first_name == "recall_history":
+                    narration = "Recalling past conversation…"
+                else:
+                    narration = f"Running {first_name}…"
+            if narration and on_narration:
+                on_narration(narration)
+
+            # Urutan ini wajib untuk OpenAI-compatible tool calling.
+            self.messages.append(
+                {
+                    "role": "assistant",
+                    "content": message.get("content") or "",
+                    "tool_calls": tool_calls,
+                }
+            )
 
             # Bila model meminta >1 tool dan SEMUANYA read-only aman-paralel,
             # jalankan bareng dalam thread pool (percepat riset/baca banyak file).

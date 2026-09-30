@@ -89,13 +89,14 @@ _CONTINUATION_WORDS = {
 }
 
 #: Umur maksimal turn TERBARU agar "lanjut" masih dianggap punya rujukan.
-#:
+#: Umur maksimal turn TERBARU agar "lanjut" masih dianggap punya rujukan.
 #: ``append_turn`` baru jalan SETELAH reply, jadi saat user mengetik "lanjut"
-#: di sesi baru, baris terbaru di archive masih milik sesi SEBELUMNYA. Tanpa
+#: di sesi baru, baris terbaru di archive masih milik sesi sebelumnya. Tanpa
 #: batas ini, "lanjut" pagi ini me-recall pekerjaan semalam seolah itu yang
-#: sedang berjalan. 6 jam menampung jeda tidur/kerja tapi tetap memisahkan
-#: sesi yang berbeda hari.
-_CONTINUATION_STALE_AFTER = 6 * 3600
+#: sedang dikerjakan. Diperpanjang ke 24 jam: gateway restart bisa terjadi
+#: kapan saja, dan user tetap berhak melanjutkan pekerjaan terakhirnya
+#: selama masih dalam hari yang sama.
+_CONTINUATION_STALE_AFTER = 24 * 3600
 
 #: Budget digest ``_recall_history``: maksimal karakter per thread dan total.
 #: Menjaga output recall tidak meledakkan context window walau archive besar.
@@ -310,6 +311,34 @@ def _update_task(task: str, status: str, identity: str) -> str:
         return f"ERROR task: could not save the board ({exc.__class__.__name__})."
     prefix = f"NOTE: {note}\n" if note else ""
     return f"{prefix}{tasks.render(board)}"
+
+
+def task_progress_summary(identity: str) -> str:
+    """Ringkasan progress task board untuk ditampilkan di UI.
+
+    Format: "📋 Updating tasks planning 6 task(s) — 2 completed, 3 remaining, 1 in progress"
+    Dipakai oleh gateway untuk menampilkan progress nyata, bukan cuma "Updating tasks".
+    """
+    try:
+        items = tasks.load(identity)
+    except Exception:
+        return "📋 Updating tasks"
+    if not items:
+        return "📋 Updating tasks (no active tasks)"
+    total = len(items)
+    completed = sum(1 for i in items if i["status"] == "completed")
+    in_progress = sum(1 for i in items if i["status"] == "in_progress")
+    pending = sum(1 for i in items if i["status"] == "pending")
+    cancelled = sum(1 for i in items if i["status"] == "cancelled")
+    remaining = total - completed - cancelled
+    parts = [f"planning {total} task(s)"]
+    if completed:
+        parts.append(f"{completed} completed")
+    if remaining:
+        parts.append(f"{remaining} remaining")
+    if in_progress:
+        parts.append(f"{in_progress} in progress")
+    return f"📋 Updating tasks {', '.join(parts)}"
 
 
 def _search_files(query: str, workspace: Path, pattern: str = "*") -> str:

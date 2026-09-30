@@ -439,6 +439,13 @@ def _tool_progress_text(name: str, arguments: dict[str, Any]) -> str:
         query = html.escape(str(arguments.get("query", ""))[:120], quote=False)
         return f"🔎 Searching files for {query}" if query else "🔎 Searching files"
     if name == "update_task":
+        # Tampilkan task + status dari arguments. Progress board nyata
+        # (completed/remaining) tidak bisa dihitung di sini karena identity
+        # tidak tersedia — itu dipanggil terpisah via task_progress_summary.
+        task_desc = html.escape(str(arguments.get("task", ""))[:80], quote=False)
+        status = str(arguments.get("status", "")).strip()
+        if task_desc and status:
+            return f"📋 Updating tasks <code>{task_desc}</code> → {status}"
         return "📋 Updating tasks"
     if name == "undo_file":
         action = str(arguments.get("action", "")).strip().lower()
@@ -1820,15 +1827,19 @@ def _stopped_recently(identity: str) -> bool:
 
 
 def _consume_stop(identity: str) -> bool:
-    """True bila turn ini yang dibatalkan oleh /stop — dan tandai sudah dipakai.
+    """True bila turn ini yang dibatalkan oleh /stop — dan hapus tanda nya.
 
     Dipakai worker turn untuk tahu bahwa pembatalan SUDAH dilaporkan oleh
     handler /stop, sehingga ia tidak mengirim "Stopped." sebagai pesan kedua.
+    Entry dihapus setelah dikonsumsi agar stop satu kali tidak memblokir
+    turn berikutnya secara permanen.
     """
     with _recent_stops_lock:
         when = _recent_stops.get(identity)
         if when is None or (time.monotonic() - when) > _STOP_ECHO_SECONDS:
             return False
+        # Consume: hapus entry sehingga turn berikutnya tidak ikut terblokir.
+        _recent_stops.pop(identity, None)
         return True
 
 
@@ -1957,7 +1968,7 @@ def _handle_command_update(
                 preview = steer_text[:60] + ("..." if len(steer_text) > 60 else "")
                 _api_call(
                     api, "sendMessage", chat_id=chat_id,
-                    text=f"⏩ Steer queued — arrives after the next tool call: '{html.escape(preview, quote=False)}'",
+                    text=f"✈️ Steer queued — arrives after the next tool call: '{html.escape(preview, quote=False)}'",
                 )
             else:
                 _api_call(api, "sendMessage", chat_id=chat_id, text="⚠️ Steer rejected (empty payload).")
@@ -1978,10 +1989,9 @@ def _handle_command_update(
             # SATU pesan saja. Turn yang dibatalkan TIDAK ikut mengirim
             # "Stopped." (lihat _send_agent_reply) dan refleksi dilewati, jadi
             # inilah satu-satunya balasan untuk /stop.
-            reply = (
-                f"❄️ Stopped — {title}\n"
-                "The running step was force-killed. Session and history are intact."
-            )
+            # User hanya butuh konteks apa yang dihentikan — tanpa deskripsi
+            # tambahan agar chat tetap bersih.
+            reply = f"❄️ Stopped — {title}"
         elif _stopped_recently(identity):
             # /stop kedua (dobel-tap, atau update yang sama dikirim ulang
             # Telegram) tiba setelah turn benar-benar berhenti. Membalas
@@ -3053,8 +3063,17 @@ def _send_agent_reply(api: str, sessions, *, chat_id: int, identity: str, text: 
         # [penjelasan] → [jawaban], tiap pesan rapi dan dikirim sekali (bukan
         # di-edit live). Selesaikan dulu bubble progres berjalan biar narasi
         # baru tampil di bawah aktivitas tool sebelumnya, bukan menimpanya.
+        #
+        # Guard: jangan kirim narasi kalau turn sudah di-stop. Kalau cancel
+        # sudah di-set tapi agent masih sempat fire on_narration sebelum
+        # benar-benar berhenti, narasi itu bocor ke chat — padahal user sudah
+        # /stop dan tidak mau lagi menerima output dari task itu.
         sentence = sentence.strip()
         if not sentence:
+            return
+        # Cek apakah turn ini sudah dibatalkan via /stop
+        session_obj = getattr(sessions, "_sessions", {}).get(identity)
+        if session_obj is not None and session_obj.cancel_event.is_set():
             return
         live.detach()
         for part in _split_message(sentence):
@@ -3100,19 +3119,19 @@ def _send_agent_reply(api: str, sessions, *, chat_id: int, identity: str, text: 
         done.set()
         heartbeat.join(timeout=0.2)
         delivery.unregister_channel(identity)
-        if ok:
-            # Kunci bubble progres sebagai catatan alur (tidak dihapus), lalu
-            # kirim jawaban final sebagai pesan baru terpisah.
-            live.finalize()
-        else:
-            live.clear()  # error/batal: buang bubble agar tidak menyisakan sampah
+        # JANGAN hapus bubble progress saat error/batal — user masih butuh
+        # melihat apa yang sedang dikerjakan sebelum /stop. Finalize mengubah
+        # bubble menjadi catatan alur yang tetap terlihat di chat, bukan
+        # menghapusnya. Menghapus = kehilangan konteks, dan user tidak bisa
+        # reply "lanjut" karena bubble-nya sudah hilang.
+        live.finalize()
     # /stop sudah mengirim SATU konfirmasi sendiri ("❄️ Stopped — <judul>").
     # Agent mengembalikan sentinel "Stopped." untuk turn yang sama, jadi
     # mengirimnya berarti dua pesan untuk satu pembatalan — dan refleksi di
     # bawah bisa menambah pesan ketiga. Turn yang dibatalkan berhenti di sini:
-    # tidak ada balasan, tidak ada refleksi, tidak ada bubble sisa.
+    # tidak ada balasan, tidak ada refleksi. Bubble progress SUDAH di-finalize
+    # di finally block di atas — jangan clear lagi di sini.
     if isinstance(reply, str) and reply.strip() == _CANCELLED_SENTINEL and _consume_stop(identity):
-        live.clear()
         return
     # Jawaban final SELALU dikirim sebagai pesan baru yang utuh & rapi (bukan
     # edit-in-place). Panjang → dipecah aman multi-part lewat _split_message.
@@ -3287,19 +3306,53 @@ def _dispatch_update(
             # deliberately checked first so /stop still escapes a question.
             if interaction.answer(identity, text):
                 return
-            # Message arrives while a turn is running → steer-first.
-            # Default behavior: inject the text into the running
-            # turn via sessions.steer() so the model sees it after the next
-            # tool call. NO interrupt, NO stop, NO new turn — the task
-            # keeps running undisturbed. User must explicitly /stop to kill.
-            #
-            # Ack message (English, terse): "⏩ Steered into current run."
-            # with optional status detail. Debounced: max 1 ack per 30s.
+            # Pesan tiba saat turn LAIN masih berjalan → mid-turn steering.
+            # Klasifikasi:
+            #   • MENDESAK (perintah/koreksi/urgensi) → interupsi task berjalan,
+            #     tampilkan banner "⚡ Interrupting…", lalu jalankan pesan ini
+            #     sebagai turn baru duluan.
+            #   • BIASA (pertanyaan santai) → sisipkan sebagai steer guidance;
+            #     turn berjalan menyerapnya, tidak diinterupsi.
+            # getattr defensif: SessionStore nyata punya method ini; stub/test
+            # yang tidak, otomatis fall-through ke jalur reply normal.
             _progress = getattr(sessions, "progress", None)
             prog = _progress(identity) if callable(_progress) else None
             if prog is not None:
-                steered = sessions.steer(identity, text)
-                if steered:
+                if sessions.classify_steer(text):
+                    # Ingat task yang sedang dikerjakan (judul sesi = teks task
+                    # yang lagi jalan) supaya Zeline bisa menawarkan lanjut nanti.
+                    held = sessions.session_title(identity)
+                    interrupted = sessions.interrupt(identity, text, held_task=held)
+                    if interrupted is not None:
+                        it, mx, elapsed = interrupted
+                        mins = int(elapsed // 60)
+                        secs = int(elapsed % 60)
+                        el = f"{mins}m {secs}s" if mins else f"{secs}s"
+                        iter_str = f", iteration {it}/{mx}" if mx else ""
+                        _api_call(
+                            api, "sendMessage", chat_id=chat_id_int,
+                            text=f"⚡ Interrupting current task ({el} elapsed{iter_str}). "
+                                 "Working on your message now.",
+                        )
+                    # jalankan pesan mendesak sebagai turn baru (turn lama sudah
+                    # dibatalkan; SessionStore.send serial via lock, jadi ia
+                    # menunggu turn lama benar-benar lepas lalu jalan). Sisipkan
+                    # pengingat task tertunda ke system_extra supaya Zeline INGAT
+                    # dan menawarkan melanjutkannya di akhir jawaban.
+                    held_now = sessions.held_task(identity)
+                    extra = ""
+                    if held_now:
+                        extra = (
+                            "\n\n[CATATAN RUNTIME — task tertunda]\n"
+                            f"Sebelum pesan mendesak ini, kamu sedang mengerjakan: \"{held_now}\".\n"
+                            "Task itu DIHOLD, belum selesai. Setelah menyelesaikan pesan "
+                            "sekarang, INGAT untuk menawarkan melanjutkannya kembali "
+                            "(mis. \"Mau lanjutin <task tertunda> yang tadi?\"). Jangan lupakan."
+                        )
+                    _start_agent_reply(api, sessions, chat_id=chat_id_int, identity=identity, text=text, tool_profile=tool_profile, reply_to_message_id=incoming_message_id, system_extra=extra)
+                    return
+                # pesan biasa saat sibuk → steer (turn berjalan menyerapnya)
+                if sessions.steer(identity, text):
                     # Debounce ack: don't spam user with ack on every steer
                     _now = time.monotonic()
                     if _now - _steer_ack_ts.get(identity, 0.0) >= _STEER_ACK_INTERVAL:
@@ -3313,7 +3366,7 @@ def _dispatch_update(
                         detail = f" ({', '.join(parts)})" if parts else ""
                         _api_call(
                             api, "sendMessage", chat_id=chat_id_int,
-                            text=f"⏩ Steered into current run{detail}. "
+                            text=f"✈️ Steered into current run{detail}. "
                                  "Your message arrives after the next tool call.",
                         )
                         _steer_ack_ts[identity] = _now
