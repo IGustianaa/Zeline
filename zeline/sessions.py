@@ -271,26 +271,44 @@ class SessionStore:
     #: sekadar disisipkan sebagai catatan). Cocokkan sebagai kata utuh, case-
     #: insensitive. User bisa menambah lewat config nanti; untuk sekarang daftar
     #: ini menutup mayoritas "stop/ganti/prioritas/sekarang".
-    _URGENT_STEER_PATTERNS = (
+    # Patterns that are ALWAYS urgent regardless of context — these are
+    # unambiguous stop/abort/redirect commands.
+    _URGENT_HARD_PATTERNS = (
         r"\bstop\b", r"\bberhenti\b", r"\bbatal\b", r"\bcancel\b",
-        r"\bganti\b", r"\bubah\b",
+        r"\bhentikan\b", r"\burgent\b",
+        r"\btunggu\s+dulu\b",
+        r"\bkoreksi\b", r"\brevisi\b",
         r"\bprioritas\w*\b", r"\bduluan\b",
-        r"\bcepet\b", r"\bcepat\b", r"\burgent\b",
-        r"\btunggu\s+dulu\b", r"\bjangan\b",
+        r"\bcepet\b", r"\bcepat\b",
+    )
+
+    # Patterns that are urgent ONLY when the message is SHORT (<=8 words) —
+    # short = standalone command; long = guidance/refinement embedded in a
+    # sentence (e.g. "jadi sl di 14-16$ karena risk 15$ jangan di 19$ okey").
+    _URGENT_SHORT_PATTERNS = (
+        r"\bganti\b", r"\bubah\b",
+        r"\bjangan\b",
         r"\bsalah\b", r"\bbukan\b", r"\bmalah\b",
-        r"\bkoreksi\b", r"\brevisi\b", r"\bhentikan\b",
     )
 
     def classify_steer(self, text: str) -> bool:
-        """True kalau pesan mid-turn ini MENDESAK (harus interupsi task).
+        """True if this mid-turn message is URGENT (should interrupt the task).
 
-        Heuristik murni (tanpa API call, sesuai preferensi murah/instan):
-        pesan yang memuat kata perintah/koreksi/urgensi dianggap mendesak dan
-        akan menginterupsi turn berjalan. Pertanyaan biasa ("btw harga eth
-        berapa") tidak cocok → diperlakukan sebagai steer biasa (menunggu).
+        Pure keyword heuristic (no API call):
+        - Hard patterns → always urgent (unambiguous stop/abort words).
+        - Soft patterns → urgent only when the message is ≤8 words, so that
+          refinement sentences like "jadi sl di 14-16$ jangan di 19$ okey"
+          are treated as steer guidance instead of an interrupt.
+        - Plain questions ("btw harga eth berapa") → ordinary steer (waits).
         """
         low = f" {text.strip().lower()} "
-        return any(re.search(p, low) for p in self._URGENT_STEER_PATTERNS)
+        if any(re.search(p, low) for p in self._URGENT_HARD_PATTERNS):
+            return True
+        word_count = len(text.strip().split())
+        if word_count <= 8:
+            if any(re.search(p, low) for p in self._URGENT_SHORT_PATTERNS):
+                return True
+        return False
 
     def progress(self, identity: str) -> tuple[int, int, float] | None:
         """(iteration, max_iteration, elapsed_seconds) turn berjalan, atau None."""

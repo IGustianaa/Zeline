@@ -3429,9 +3429,7 @@ class ZelinePublicCoreTests(unittest.TestCase):
         self.assertEqual(sessions.stopped, "telegram:42")
         self.assertFalse(gateway_stop.is_set())
         reply = api.call_args.kwargs["text"]
-        self.assertIn("❄️ Stopped — Bangun aplikasi", reply)
-        self.assertIn("force-killed", reply)
-        self.assertIn("history are intact", reply)
+        self.assertEqual(reply, "❄️ Stopped — Bangun aplikasi")
 
     def test_telegram_stop_when_idle_uses_exact_message(self):
         telegram = importlib.import_module("zeline.gateways.telegram")

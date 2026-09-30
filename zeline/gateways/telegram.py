@@ -1820,15 +1820,19 @@ def _stopped_recently(identity: str) -> bool:
 
 
 def _consume_stop(identity: str) -> bool:
-    """True bila turn ini yang dibatalkan oleh /stop — dan tandai sudah dipakai.
+    """True bila turn ini yang dibatalkan oleh /stop — dan hapus tanda nya.
 
     Dipakai worker turn untuk tahu bahwa pembatalan SUDAH dilaporkan oleh
     handler /stop, sehingga ia tidak mengirim "Stopped." sebagai pesan kedua.
+    Entry dihapus setelah dikonsumsi agar stop satu kali tidak memblokir
+    turn berikutnya secara permanen.
     """
     with _recent_stops_lock:
         when = _recent_stops.get(identity)
         if when is None or (time.monotonic() - when) > _STOP_ECHO_SECONDS:
             return False
+        # Consume: hapus entry sehingga turn berikutnya tidak ikut terblokir.
+        _recent_stops.pop(identity, None)
         return True
 
 
@@ -1957,7 +1961,7 @@ def _handle_command_update(
                 preview = steer_text[:60] + ("..." if len(steer_text) > 60 else "")
                 _api_call(
                     api, "sendMessage", chat_id=chat_id,
-                    text=f"⏩ Steer queued — arrives after the next tool call: '{html.escape(preview, quote=False)}'",
+                    text=f"✈️ Steer queued — arrives after the next tool call: '{html.escape(preview, quote=False)}'",
                 )
             else:
                 _api_call(api, "sendMessage", chat_id=chat_id, text="⚠️ Steer rejected (empty payload).")
@@ -1978,10 +1982,9 @@ def _handle_command_update(
             # SATU pesan saja. Turn yang dibatalkan TIDAK ikut mengirim
             # "Stopped." (lihat _send_agent_reply) dan refleksi dilewati, jadi
             # inilah satu-satunya balasan untuk /stop.
-            reply = (
-                f"❄️ Stopped — {title}\n"
-                "The running step was force-killed. Session and history are intact."
-            )
+            # User hanya butuh konteks apa yang dihentikan — tanpa deskripsi
+            # tambahan agar chat tetap bersih.
+            reply = f"❄️ Stopped — {title}"
         elif _stopped_recently(identity):
             # /stop kedua (dobel-tap, atau update yang sama dikirim ulang
             # Telegram) tiba setelah turn benar-benar berhenti. Membalas
@@ -3053,8 +3056,17 @@ def _send_agent_reply(api: str, sessions, *, chat_id: int, identity: str, text: 
         # [penjelasan] → [jawaban], tiap pesan rapi dan dikirim sekali (bukan
         # di-edit live). Selesaikan dulu bubble progres berjalan biar narasi
         # baru tampil di bawah aktivitas tool sebelumnya, bukan menimpanya.
+        #
+        # Guard: jangan kirim narasi kalau turn sudah di-stop. Kalau cancel
+        # sudah di-set tapi agent masih sempat fire on_narration sebelum
+        # benar-benar berhenti, narasi itu bocor ke chat — padahal user sudah
+        # /stop dan tidak mau lagi menerima output dari task itu.
         sentence = sentence.strip()
         if not sentence:
+            return
+        # Cek apakah turn ini sudah dibatalkan via /stop
+        session_obj = getattr(sessions, "_sessions", {}).get(identity)
+        if session_obj is not None and session_obj.cancel_event.is_set():
             return
         live.detach()
         for part in _split_message(sentence):
@@ -3100,19 +3112,19 @@ def _send_agent_reply(api: str, sessions, *, chat_id: int, identity: str, text: 
         done.set()
         heartbeat.join(timeout=0.2)
         delivery.unregister_channel(identity)
-        if ok:
-            # Kunci bubble progres sebagai catatan alur (tidak dihapus), lalu
-            # kirim jawaban final sebagai pesan baru terpisah.
-            live.finalize()
-        else:
-            live.clear()  # error/batal: buang bubble agar tidak menyisakan sampah
+        # JANGAN hapus bubble progress saat error/batal — user masih butuh
+        # melihat apa yang sedang dikerjakan sebelum /stop. Finalize mengubah
+        # bubble menjadi catatan alur yang tetap terlihat di chat, bukan
+        # menghapusnya. Menghapus = kehilangan konteks, dan user tidak bisa
+        # reply "lanjut" karena bubble-nya sudah hilang.
+        live.finalize()
     # /stop sudah mengirim SATU konfirmasi sendiri ("❄️ Stopped — <judul>").
     # Agent mengembalikan sentinel "Stopped." untuk turn yang sama, jadi
     # mengirimnya berarti dua pesan untuk satu pembatalan — dan refleksi di
     # bawah bisa menambah pesan ketiga. Turn yang dibatalkan berhenti di sini:
-    # tidak ada balasan, tidak ada refleksi, tidak ada bubble sisa.
+    # tidak ada balasan, tidak ada refleksi. Bubble progress SUDAH di-finalize
+    # di finally block di atas — jangan clear lagi di sini.
     if isinstance(reply, str) and reply.strip() == _CANCELLED_SENTINEL and _consume_stop(identity):
-        live.clear()
         return
     # Jawaban final SELALU dikirim sebagai pesan baru yang utuh & rapi (bukan
     # edit-in-place). Panjang → dipecah aman multi-part lewat _split_message.
