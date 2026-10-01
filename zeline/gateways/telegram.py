@@ -3144,6 +3144,22 @@ def _send_agent_reply(api: str, sessions, *, chat_id: int, identity: str, text: 
     # di finally block di atas — jangan clear lagi di sini.
     if isinstance(reply, str) and reply.strip() == _CANCELLED_SENTINEL and _consume_stop(identity):
         return
+    # Guard anti-senyap: provider yang mengembalikan teks kosong/whitespace
+    # (mis. model reasoning yang menaruh semua output di reasoning_content lalu
+    # kehabisan token sebelum menulis jawaban) dulu berakhir sebagai
+    # `_split_message("")` → satu part kosong → sendMessage tanpa isi → Telegram
+    # menolak → user melihat Zeline DIAM tanpa error. Kehilangan balasan terlihat
+    # seperti bot yang rusak. Lebih baik jujur: kirim satu pesan yang menyatakan
+    # tidak ada teks yang dihasilkan, supaya user tahu turn-nya selesai.
+    if not isinstance(reply, str) or not reply.strip():
+        _api_call(
+            api, "sendMessage", chat_id=chat_id,
+            text="(no text returned — the provider finished without a message. "
+                 "Try again, or switch model with /model.)",
+        )
+        if ok:
+            _maybe_reflect_bg(api, sessions, chat_id, identity)
+        return
     # Jawaban final SELALU dikirim sebagai pesan baru yang utuh & rapi (bukan
     # edit-in-place). Panjang → dipecah aman multi-part lewat _split_message.
     # Bubble PERTAMA di-reply ke pesan user (reply_to_message_id) supaya jelas
@@ -3152,6 +3168,8 @@ def _send_agent_reply(api: str, sessions, *, chat_id: int, identity: str, text: 
     # (biar rantai jawaban tidak menumpuk quote berulang).
     first_part = True
     for part in _split_message(reply):
+        if not part.strip():
+            continue
         extra: dict[str, Any] = {}
         if first_part and reply_to_message_id:
             extra["reply_to_message_id"] = reply_to_message_id
@@ -3172,18 +3190,27 @@ def _send_agent_reply(api: str, sessions, *, chat_id: int, identity: str, text: 
     # menyimpan/memperbaiki skill — jadi ini yang bikin Zeline "sering
     # Self-improvement" seperti diminta, tanpa nyampah di sesi ringan.
     if ok:
-        def _reflect_bg():
-            try:
-                summary = sessions.reflect(identity)
-            except Exception:
-                summary = None
-            if summary:
-                _api_call(
-                    api, "sendMessage", chat_id=chat_id,
-                    text=f"📒 Improvement: {html.escape(summary[:1500], quote=False)}",
-                    parse_mode="HTML",
-                )
-        threading.Thread(target=_reflect_bg, daemon=True, name=f"zeline-reflect-{chat_id}").start()
+        _maybe_reflect_bg(api, sessions, chat_id, identity)
+
+
+def _maybe_reflect_bg(api: str, sessions, chat_id: int, identity: str) -> None:
+    """Jalankan refleksi self-improvement di background (best-effort).
+
+    Dipisah dari `_send_agent_reply` supaya jalur balasan yang berbeda — pesan
+    normal maupun jalur 'tidak ada teks' — memakai perilaku refleksi yang SAMA.
+    """
+    def _reflect_bg():
+        try:
+            summary = sessions.reflect(identity)
+        except Exception:
+            summary = None
+        if summary:
+            _api_call(
+                api, "sendMessage", chat_id=chat_id,
+                text=f"📒 Improvement: {html.escape(summary[:1500], quote=False)}",
+                parse_mode="HTML",
+            )
+    threading.Thread(target=_reflect_bg, daemon=True, name=f"zeline-reflect-{chat_id}").start()
 
 
 def _start_agent_reply(api: str, sessions, *, chat_id: int, identity: str, text: str, tool_profile: str, reply_to_message_id: int | None = None, system_extra: str = "") -> threading.Thread:
@@ -3466,6 +3493,35 @@ def _verify_token(api: str) -> tuple[str | None, str]:
     return None, last_error
 
 
+def _notify_dispatch_failure(api: str, update: dict[str, Any], *, allowed: list[Any]) -> None:
+    """Beri tahu user bahwa pemrosesan pesannya gagal — jangan biarkan senyap.
+
+    Dipanggil HANYA setelah update lolos pemeriksaan izin (kalau tidak, kita
+    akan membalas pemilik chat asing). Tujuannya memastikan tidak ada pesan yang
+    hilang tanpa jejak di sisi user: error internal apa pun terlihat seperti bot
+    yang mati.
+    """
+    message = update.get("message") or {}
+    chat = message.get("chat") or {}
+    chat_id = chat.get("id")
+    if chat_id is None:
+        # callback_query yang gagal sudah punya jawaban alert di jalur izin;
+        # tidak ada chat untuk dikirimi pesan biasa.
+        return
+    try:
+        chat_id_int = int(chat_id)
+    except (TypeError, ValueError):
+        return
+    if not _allowed(chat_id_int, allowed):
+        return
+    _api_call(
+        api, "sendMessage", chat_id=chat_id_int,
+        text="⚠️ Something went wrong processing that message and no reply was "
+             "produced. It was skipped so the bot stays healthy — please send it "
+             "again, or rephrase if it keeps failing.",
+    )
+
+
 def start(sessions, cfg: dict[str, Any], stop_event) -> None:
     token = str(cfg["token"]).strip()
     api = API_TEMPLATE.format(token=token)
@@ -3600,6 +3656,14 @@ def start(sessions, cfg: dict[str, Any], stop_event) -> None:
                 _dispatch_update(api, token, sessions, update, allowed=allowed, tool_profile=tool_profile, stop_event=stop_event)
             except Exception as exc:
                 print(f"  [telegram] update {update_id} skipped: {exc.__class__.__name__}: {exc}", flush=True)
+                # Jangan senyap: kalau pemrosesan pesan gagal SETELAH melewati
+                # pemeriksaan izin, user berhak tahu bahwa pesannya tidak
+                # menghasilkan balasan. Dulu ini hanya dicetak ke log, jadi dari
+                # sisi user bot-nya terlihat mati — padahal ada error nyata.
+                # Update tetap di-skip (offset maju) supaya satu pesan rusak
+                # tidak mengulang tanpa henti; yang berubah hanya: user diberi
+                # tahu dan diminta mencoba lagi.
+                _notify_dispatch_failure(api, update, allowed=allowed)
             finally:
                 offset = max(offset, update_id + 1)
                 _save_offset(offset)
