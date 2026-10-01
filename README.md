@@ -87,6 +87,21 @@ iwr -UseBasicParsing https://github.com/Mftrferdinand/Zeline/releases/download/v
 
 Then `zeline setup`.
 
+### npm (any platform with Node.js ≥ 18)
+
+If you already use npm, the wrapper does the same verified wheel install on
+first run — no `curl` or `iwr` needed:
+
+```sh
+npm install -g zeline
+zeline setup
+```
+
+The wrapper detects Python 3.10+ on your `PATH`, downloads the same versioned
+wheel and `SHA256SUMS` from the GitHub release, verifies the checksum, and
+installs into the same private runtime (`~/.local/share/zeline`). The `curl`
+and `iwr` routes below stay available for machines without Node.js.
+
 ### Verify the download independently (optional)
 
 The installer's own wheel check comes from the same release as the installer, so
