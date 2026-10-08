@@ -1,6 +1,0 @@
-[Unit]
-Description=Muse stack watchdog (oneshot)
-
-[Service]
-Type=oneshot
-ExecStart=/opt/muse-stack/watchdog.sh

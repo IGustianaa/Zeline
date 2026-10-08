@@ -1,0 +1,1520 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Documentation for Zeline — the open-source agentic AI framework by Zerolinear.">
+      
+      
+      
+        <link rel="canonical" href="https://docs.zeline.dev/installation/">
+      
+      
+        <link rel="prev" href="..">
+      
+      
+        <link rel="next" href="../extending/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/zerolinear-logo.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Installation - Zeline Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#install-zeline" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="https://zeline.dev" title="Zeline Docs" class="md-header__button md-logo" aria-label="Zeline Docs" data-md-component="logo">
+      
+  <img src="../assets/zerolinear-logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Zeline Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Installation
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="blue"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="blue"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Mftrferdinand/Zeline" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Mftrferdinand/Zeline
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Installation
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../extending/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Extending Zeline
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../agent-working-style-and-reliability/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Agent Working Style
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../README.id/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Docs (Bahasa Indonesia)
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../README.zh/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Docs (中文)
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="https://zeline.dev" title="Zeline Docs" class="md-nav__button md-logo" aria-label="Zeline Docs" data-md-component="logo">
+      
+  <img src="../assets/zerolinear-logo.png" alt="logo">
+
+    </a>
+    Zeline Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Mftrferdinand/Zeline" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Mftrferdinand/Zeline
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#support-matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Support matrix
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Support matrix">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#npm-nodejs-18" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        npm (Node.js ≥ 18)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pypi-pip-uv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PyPI (pip / uv)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-there-is-no-checksum-step-to-copy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why there is no checksum step to copy
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#termux" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Termux
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#linux" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Linux
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#macos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        macOS
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ios-ipados-ish" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        iOS / iPadOS (iSH)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#windows-powershell" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Windows PowerShell
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting-windows-defender-or-antivirus-flags-the-install" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting: Windows Defender or antivirus flags the install
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install-from-a-checkout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Install from a checkout
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#preview-platform-requirements-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Preview platform requirements only
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configure-zeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configure Zeline
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configure Zeline">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#telegram-owner-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Telegram owner setup
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#update" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Update
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Update">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#in-flight-work-is-not-cut-off" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        In-flight work is not cut off
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version-and-update-from-telegram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Version and update from Telegram
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-and-uninstall" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data and uninstall
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verify-and-troubleshoot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verify and troubleshoot
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../extending/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Extending Zeline
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../agent-working-style-and-reliability/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Agent Working Style
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../README.id/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docs (Bahasa Indonesia)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../README.zh/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docs (中文)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#support-matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Support matrix
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Support matrix">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#npm-nodejs-18" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        npm (Node.js ≥ 18)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pypi-pip-uv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PyPI (pip / uv)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-there-is-no-checksum-step-to-copy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why there is no checksum step to copy
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#termux" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Termux
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#linux" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Linux
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#macos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        macOS
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ios-ipados-ish" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        iOS / iPadOS (iSH)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#windows-powershell" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Windows PowerShell
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting-windows-defender-or-antivirus-flags-the-install" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting: Windows Defender or antivirus flags the install
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install-from-a-checkout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Install from a checkout
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#preview-platform-requirements-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Preview platform requirements only
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configure-zeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configure Zeline
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configure Zeline">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#telegram-owner-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Telegram owner setup
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#update" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Update
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Update">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#in-flight-work-is-not-cut-off" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        In-flight work is not cut off
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version-and-update-from-telegram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Version and update from Telegram
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-and-uninstall" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data and uninstall
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verify-and-troubleshoot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verify and troubleshoot
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="install-zeline">Install Zeline<a class="headerlink" href="#install-zeline" title="Permanent link">&para;</a></h1>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>  ███████╗███████╗██╗     ██╗███╗   ██╗███████╗
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>  ╚══███╔╝██╔════╝██║     ██║████╗  ██║██╔════╝
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    ███╔╝ █████╗  ██║     ██║██╔██╗ ██║█████╗
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>   ███╔╝  ██╔══╝  ██║     ██║██║╚██╗██║██╔══╝
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>  ███████╗███████╗███████╗██║██║ ╚████║███████╗
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>  ╚══════╝╚══════╝╚══════╝╚═╝╚═╝  ╚═══╝╚══════╝
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>  AGENTIC AI BY ZEROLINEAR • v0.3.8
+</code></pre></div>
+<p>On Termux, Linux, macOS, and iSH, Zeline installs into a <strong>private Python
+environment</strong> owned by your account. Windows uses a per-user Python package
+install. Neither path needs <code>sudo</code> or Administrator access, and the POSIX
+installer avoids PEP 668 conflicts on current Linux and macOS releases.</p>
+<h2 id="support-matrix">Support matrix<a class="headerlink" href="#support-matrix" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Platform</th>
+<th style="text-align: right;">Interactive CLI</th>
+<th style="text-align: right;">Messaging gateway</th>
+<th style="text-align: right;">Browser automation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Termux / Android</td>
+<td style="text-align: right;">Yes</td>
+<td style="text-align: right;">Yes, use <code>termux-wake-lock</code></td>
+<td style="text-align: right;">Built-in HTTP tools; browser MCP can be remote</td>
+</tr>
+<tr>
+<td>Linux</td>
+<td style="text-align: right;">Yes</td>
+<td style="text-align: right;">Yes</td>
+<td style="text-align: right;">Built-in HTTP tools; browser MCP supported</td>
+</tr>
+<tr>
+<td>macOS</td>
+<td style="text-align: right;">Yes</td>
+<td style="text-align: right;">Yes</td>
+<td style="text-align: right;">Built-in HTTP tools; browser MCP supported</td>
+</tr>
+<tr>
+<td>iOS / iPadOS through iSH</td>
+<td style="text-align: right;">Yes</td>
+<td style="text-align: right;">Foreground only; iOS may suspend iSH</td>
+<td style="text-align: right;">Built-in HTTP tools only</td>
+</tr>
+<tr>
+<td>Windows PowerShell</td>
+<td style="text-align: right;">Yes</td>
+<td style="text-align: right;">Yes</td>
+<td style="text-align: right;">Built-in HTTP tools; browser MCP supported</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Requirements:</strong> Python 3.10+. Git is only needed for checkout installs;
+WhatsApp also needs Node.js 18+ and npm.</p>
+<p>One line on every POSIX platform — Termux, Linux, macOS, and iSH:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>curl<span class="w"> </span>-fsSLO<span class="w"> </span>--proto<span class="w"> </span><span class="s1">'=https'</span><span class="w"> </span>--tlsv1.2<span class="w"> </span>https://github.com/Mftrferdinand/Zeline/releases/download/v0.3.8/install.sh<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>bash<span class="w"> </span>install.sh
+</code></pre></div>
+<p>Then <code>zeline setup</code>.</p>
+<h3 id="npm-nodejs-18">npm (Node.js ≥ 18)<a class="headerlink" href="#npm-nodejs-18" title="Permanent link">&para;</a></h3>
+<p>If you already use npm, the wrapper does the same verified wheel install on
+first run — no <code>curl</code> or <code>iwr</code> needed:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>npm<span class="w"> </span>install<span class="w"> </span>-g<span class="w"> </span>zeline
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>zeline<span class="w"> </span>setup
+</code></pre></div>
+<p>The wrapper detects Python 3.10+ on your <code>PATH</code>, downloads the same versioned
+wheel and <code>SHA256SUMS</code> from the GitHub release, verifies the checksum, and
+installs into the same private runtime (<code>~/.local/share/zeline</code>). The <code>curl</code>
+and <code>iwr</code> routes below stay available for machines without Node.js.</p>
+<h3 id="pypi-pip-uv">PyPI (<code>pip</code> / <code>uv</code>)<a class="headerlink" href="#pypi-pip-uv" title="Permanent link">&para;</a></h3>
+<p>Zeline is on PyPI via Trusted Publishing (OIDC) — no API token is stored in
+the repository, and the same artifacts that passed checksum and metadata
+verification are uploaded rather than rebuilt.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>pip<span class="w"> </span>install<span class="w"> </span>zeline
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="c1"># or, in an isolated tool environment:</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>uv<span class="w"> </span>tool<span class="w"> </span>install<span class="w"> </span>zeline
+</code></pre></div>
+<p>Then <code>zeline setup</code>. On a fresh machine the installer route below is still
+recommended — it provisions Python, creates the private environment, and
+verifies the release wheel against <code>SHA256SUMS</code> without assuming you already
+have <code>uv</code> or <code>pip</code>.</p>
+<h3 id="why-there-is-no-checksum-step-to-copy">Why there is no checksum step to copy<a class="headerlink" href="#why-there-is-no-checksum-step-to-copy" title="Permanent link">&para;</a></h3>
+<p>Release assets are immutable tag assets, and the installer verifies the versioned
+wheel against <code>SHA256SUMS</code> itself — refusing to install on a mismatch, a
+malformed digest, a missing entry, or a non-HTTPS URL. Pasting a hand-written
+SHA-256 check for <code>install.sh</code> added nothing: it compared the installer against a
+manifest fetched over the same connection from the same release, so anyone able
+to tamper with one could tamper with both. It cost every reader fifteen lines and
+bought no security.</p>
+<p>What <em>does</em> add a separate guarantee is build provenance, which is signed by
+GitHub rather than served alongside the file. If you want that assurance, verify
+it with GitHub CLI before running the installer:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>gh<span class="w"> </span>attestation<span class="w"> </span>verify<span class="w"> </span>install.sh<span class="w"> </span>--repo<span class="w"> </span>Mftrferdinand/Zeline
+</code></pre></div>
+<p>Attestations cover the wheel, source archive, both installers, and the checksum
+manifest.</p>
+<h2 id="termux">Termux<a class="headerlink" href="#termux" title="Permanent link">&para;</a></h2>
+<p>Install Termux from F-Droid or GitHub (the Play Store build is obsolete), then:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>pkg<span class="w"> </span>update<span class="w"> </span>-y
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>pkg<span class="w"> </span>install<span class="w"> </span>python<span class="w"> </span>curl<span class="w"> </span>-y
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>curl<span class="w"> </span>-fsSLO<span class="w"> </span>--proto<span class="w"> </span><span class="s1">'=https'</span><span class="w"> </span>--tlsv1.2<span class="w"> </span>https://github.com/Mftrferdinand/Zeline/releases/download/v0.3.8/install.sh<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>bash<span class="w"> </span>install.sh
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>zeline<span class="w"> </span>setup
+</code></pre></div>
+<p>For a gateway that must stay alive while the screen is off:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>termux-wake-lock
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>zeline<span class="w"> </span>gateway<span class="w"> </span>start
+</code></pre></div>
+<h2 id="linux">Linux<a class="headerlink" href="#linux" title="Permanent link">&para;</a></h2>
+<p>Debian / Ubuntu:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>update
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>python3<span class="w"> </span>python3-venv<span class="w"> </span>curl<span class="w"> </span>-y
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>curl<span class="w"> </span>-fsSLO<span class="w"> </span>--proto<span class="w"> </span><span class="s1">'=https'</span><span class="w"> </span>--tlsv1.2<span class="w"> </span>https://github.com/Mftrferdinand/Zeline/releases/download/v0.3.8/install.sh<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>bash<span class="w"> </span>install.sh
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>zeline<span class="w"> </span>setup
+</code></pre></div>
+<p>Fedora:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>python3<span class="w"> </span>curl<span class="w"> </span>-y
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>curl<span class="w"> </span>-fsSLO<span class="w"> </span>--proto<span class="w"> </span><span class="s1">'=https'</span><span class="w"> </span>--tlsv1.2<span class="w"> </span>https://github.com/Mftrferdinand/Zeline/releases/download/v0.3.8/install.sh<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>bash<span class="w"> </span>install.sh
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>zeline<span class="w"> </span>setup
+</code></pre></div>
+<p>Arch Linux:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>sudo<span class="w"> </span>pacman<span class="w"> </span>-S<span class="w"> </span>--needed<span class="w"> </span>python<span class="w"> </span>curl
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>curl<span class="w"> </span>-fsSLO<span class="w"> </span>--proto<span class="w"> </span><span class="s1">'=https'</span><span class="w"> </span>--tlsv1.2<span class="w"> </span>https://github.com/Mftrferdinand/Zeline/releases/download/v0.3.8/install.sh<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>bash<span class="w"> </span>install.sh
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>zeline<span class="w"> </span>setup
+</code></pre></div>
+<p>Zeline itself never uses <code>sudo</code>; the commands above only install OS packages.</p>
+<h2 id="macos">macOS<a class="headerlink" href="#macos" title="Permanent link">&para;</a></h2>
+<p>Install Apple command-line tools and Homebrew Python if needed:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>xcode-select<span class="w"> </span>--install
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>brew<span class="w"> </span>install<span class="w"> </span>python
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>curl<span class="w"> </span>-fsSLO<span class="w"> </span>--proto<span class="w"> </span><span class="s1">'=https'</span><span class="w"> </span>--tlsv1.2<span class="w"> </span>https://github.com/Mftrferdinand/Zeline/releases/download/v0.3.8/install.sh<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>bash<span class="w"> </span>install.sh
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>zeline<span class="w"> </span>setup
+</code></pre></div>
+<p>The private Zeline environment avoids Homebrew's
+<code>externally-managed-environment</code> / PEP 668 restriction. Both Apple Silicon and
+Intel Macs are supported by the same command.</p>
+<h2 id="ios-ipados-ish">iOS / iPadOS (iSH)<a class="headerlink" href="#ios-ipados-ish" title="Permanent link">&para;</a></h2>
+<p>Apple does not allow Zeline to run as a native unrestricted background process.
+Use <a href="https://ish.app/">iSH</a>, an Alpine Linux shell for iOS/iPadOS:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>apk<span class="w"> </span>update
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>apk<span class="w"> </span>add<span class="w"> </span>bash<span class="w"> </span>curl<span class="w"> </span>python3<span class="w"> </span>py3-pip
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>curl<span class="w"> </span>-fsSLO<span class="w"> </span>--proto<span class="w"> </span><span class="s1">'=https'</span><span class="w"> </span>--tlsv1.2<span class="w"> </span>https://github.com/Mftrferdinand/Zeline/releases/download/v0.3.8/install.sh<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>bash<span class="w"> </span>install.sh
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>zeline<span class="w"> </span>setup
+</code></pre></div>
+<p>The CLI and normal HTTP integrations work. Keep iSH in the foreground for a
+messaging gateway: iOS can suspend it after the app leaves the foreground.
+Local Chromium/Playwright is not supported in iSH; use Zeline's HTTP browser or
+a remote browser integration instead.</p>
+<h2 id="windows-powershell">Windows PowerShell<a class="headerlink" href="#windows-powershell" title="Permanent link">&para;</a></h2>
+<p>Open <strong>PowerShell</strong> or <strong>Windows Terminal</strong>, not Command Prompt. Administrator
+rights are not required:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="nb">iwr </span><span class="n">-UseBasicParsing</span> <span class="n">https</span><span class="p">://</span><span class="n">github</span><span class="p">.</span><span class="n">com</span><span class="p">/</span><span class="n">Mftrferdinand</span><span class="p">/</span><span class="n">Zeline</span><span class="p">/</span><span class="n">releases</span><span class="p">/</span><span class="n">download</span><span class="p">/</span><span class="n">v0</span><span class="p">.</span><span class="n">3</span><span class="p">.</span><span class="n">8</span><span class="p">/</span><span class="n">install</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-OutFile</span> <span class="n">install</span><span class="p">.</span><span class="n">ps1</span><span class="p">;</span> <span class="p">.\</span><span class="n">install</span><span class="p">.</span><span class="n">ps1</span>
+</code></pre></div>
+<p>Then <code>zeline setup</code>. <code>install.ps1</code> verifies the versioned wheel with
+<code>Get-FileHash -Algorithm SHA256</code> against <code>SHA256SUMS</code> before installing it, and
+rejects a malformed digest with <code>-notmatch '^[0-9a-f]{64}$'</code>.</p>
+<p>If <code>python</code> opens Microsoft Store, install Python 3.10+ from
+<a href="https://www.python.org/downloads/windows/">python.org</a> and tick <strong>Add
+python.exe to PATH</strong>. The installer detects and rejects the Microsoft Store
+alias stub.</p>
+<p>If <code>zeline</code> is not recognized immediately, open a new terminal. The installer
+also prints the exact selected-interpreter command (for example <code>python -m
+zeline.cli</code> or <code>py -3 -m zeline.cli</code>) when it leaves PATH unchanged.</p>
+<h2 id="troubleshooting-windows-defender-or-antivirus-flags-the-install">Troubleshooting: Windows Defender or antivirus flags the install<a class="headerlink" href="#troubleshooting-windows-defender-or-antivirus-flags-the-install" title="Permanent link">&para;</a></h2>
+<p>If Windows Defender, Bitdefender, or another antivirus quarantines the Zeline
+wheel or the installer's private runtime, this is a <strong>false positive</strong>. ML-based
+antivirus engines commonly flag unsigned Python executables and freshly-created
+directories that download packages.</p>
+<p>Zeline's wheel is published to PyPI through Trusted Publishing (OIDC) with
+build provenance attested by GitHub. The installer verifies every download
+against <code>SHA256SUMS</code> from the same release before installing.</p>
+<p><strong>To whitelist Zeline on Windows:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="c"># Run PowerShell as Administrator</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="nb">Add-MpPreference</span> <span class="n">-ExclusionPath</span> <span class="s2">"$env:LOCALAPPDATA\zeline"</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="c"># If you installed via install.ps1, also exclude the installer root:</span>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="nb">Add-MpPreference</span> <span class="n">-ExclusionPath</span> <span class="s2">"$env:USERPROFILE\.local\share\zeline"</span>
+</code></pre></div>
+<ul>
+<li><strong>Windows Defender:</strong> Run the command above, or add the folder manually via
+  <em>Settings → Privacy &amp; security → Windows Security → Virus &amp; threat
+  protection → Manage settings → Exclusions → Add an exclusion</em>.</li>
+<li><strong>Bitdefender:</strong> Add an exception in the Bitdefender console (<em>Protection →
+  Antivirus → Settings → Manage Exceptions</em>).</li>
+<li><strong>Other antivirus:</strong> Whitelist the <strong>folder</strong>, not the file hash — Zeline
+  updates itself, so the hash changes every version.</li>
+</ul>
+<p>For more context on why unsigned Python packages trigger these alerts, see
+<a href="https://peps.python.org/pep-0458/">PEP 458</a> and the
+<a href="https://docs.pypi.org/security/">PyPI security policy</a>.</p>
+<h2 id="install-from-a-checkout">Install from a checkout<a class="headerlink" href="#install-from-a-checkout" title="Permanent link">&para;</a></h2>
+<p>POSIX platforms:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/Mftrferdinand/Zeline.git
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="nb">cd</span><span class="w"> </span>Zeline
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>bash<span class="w"> </span>install.sh<span class="w"> </span>--source<span class="w"> </span>.
+</code></pre></div>
+<p>Windows PowerShell:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">://</span><span class="n">github</span><span class="p">.</span><span class="n">com</span><span class="p">/</span><span class="n">Mftrferdinand</span><span class="p">/</span><span class="n">Zeline</span><span class="p">.</span><span class="n">git</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="nb">cd </span><span class="n">Zeline</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="n">powershell</span> <span class="n">-ExecutionPolicy</span> <span class="n">Bypass</span> <span class="o">-File</span> <span class="p">.\</span><span class="n">install</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Source</span> <span class="p">.</span>
+</code></pre></div>
+<h2 id="preview-platform-requirements-only">Preview platform requirements only<a class="headerlink" href="#preview-platform-requirements-only" title="Permanent link">&para;</a></h2>
+<p>The POSIX installer can explain what it would use without installing anything:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>bash<span class="w"> </span>install.sh<span class="w"> </span>--platform-info
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>bash<span class="w"> </span>install.sh<span class="w"> </span>--platform-info<span class="w"> </span>--platform<span class="w"> </span>termux
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>bash<span class="w"> </span>install.sh<span class="w"> </span>--platform-info<span class="w"> </span>--platform<span class="w"> </span>linux
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>bash<span class="w"> </span>install.sh<span class="w"> </span>--platform-info<span class="w"> </span>--platform<span class="w"> </span>macos
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>bash<span class="w"> </span>install.sh<span class="w"> </span>--platform-info<span class="w"> </span>--platform<span class="w"> </span>ios-ish
+</code></pre></div>
+<h2 id="configure-zeline">Configure Zeline<a class="headerlink" href="#configure-zeline" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>zeline<span class="w"> </span>setup
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>zeline<span class="w"> </span>model
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>zeline<span class="w"> </span>tools<span class="w"> </span>list
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>zeline<span class="w"> </span>mcp<span class="w"> </span>list
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>zeline<span class="w"> </span>doctor
+</code></pre></div>
+<p>Tool access is explicit:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>zeline<span class="w"> </span>tools<span class="w"> </span>profile<span class="w"> </span>safe
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>zeline<span class="w"> </span>tools<span class="w"> </span>profile<span class="w"> </span>workspace
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>zeline<span class="w"> </span>tools<span class="w"> </span>profile<span class="w"> </span>full
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>zeline<span class="w"> </span>tools<span class="w"> </span>workspace<span class="w"> </span>~/projects
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>zeline<span class="w"> </span>tools<span class="w"> </span>disable<span class="w"> </span>run_shell
+<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>zeline<span class="w"> </span>tools<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>run_shell
+</code></pre></div>
+<p><code>full</code> on a messaging gateway is refused until that gateway has an owner
+allowlist. This prevents a public bot from becoming a remote shell.</p>
+<h3 id="telegram-owner-setup">Telegram owner setup<a class="headerlink" href="#telegram-owner-setup" title="Permanent link">&para;</a></h3>
+<p>During <code>zeline setup</code> the Telegram step asks for an <strong>owner chat ID</strong> — your
+numeric Telegram account ID (message <code>@userinfobot</code> to get it; this is not your
+<code>@username</code>). What you enter decides the bot's trust level:</p>
+<ul>
+<li><strong>Owner chat ID given</strong> → the bot has a single trusted user, so it starts with
+  the <strong>full toolset</strong> (native tools + MCP + image analysis) out of the box. The
+  ID becomes the sole allowlist entry, <code>tool_profile</code> is set to <code>full</code>, and the
+  remote-code-execution acknowledgement is recorded automatically — no extra
+  <code>zeline tools</code> command needed.</li>
+<li><strong>Left empty</strong> → the bot stays <strong>public with safe tools only</strong> (memory + web).
+  Re-run <code>zeline setup</code> and supply an owner chat ID later to unlock full tools.</li>
+</ul>
+<p>The full profile is safe here precisely because the allowlist is your single
+owner: there is no other user the runtime would execute tools on behalf of.</p>
+<h2 id="update">Update<a class="headerlink" href="#update" title="Permanent link">&para;</a></h2>
+<p>One command, every platform — Termux, Linux, macOS, iSH, and Windows
+PowerShell:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>zeline<span class="w"> </span>update
+</code></pre></div>
+<p><code>zeline upgrade</code> is an alias. The updater picks the right path automatically:</p>
+<table>
+<thead>
+<tr>
+<th>Where Zeline runs from</th>
+<th>What <code>zeline update</code> does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Release install (POSIX)</td>
+<td>Downloads <code>install.sh</code> + <code>SHA256SUMS</code> from the latest release, verifies the SHA-256, runs it</td>
+</tr>
+<tr>
+<td>Release install (Windows)</td>
+<td>Downloads <code>install.ps1</code> + <code>SHA256SUMS</code>, verifies the SHA-256, runs it through PowerShell</td>
+</tr>
+<tr>
+<td>Git checkout</td>
+<td>Rebuilds and reinstalls your local source with the installer's <code>--source</code> / <code>-Source</code> mode</td>
+</tr>
+</tbody>
+</table>
+<p>Downloads are HTTPS-only and the installer is refused if its checksum does not
+match the release manifest. The private environment and <code>zeline</code> command are
+updated in place; your configuration, sessions, memory, and private skills under
+<code>~/.zeline</code> remain untouched.</p>
+<p>After updating, reload any running gateway:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>zeline<span class="w"> </span>gateway<span class="w"> </span>restart
+</code></pre></div>
+<p>Running the platform installer again by hand still works and is equivalent.</p>
+<h3 id="in-flight-work-is-not-cut-off">In-flight work is not cut off<a class="headerlink" href="#in-flight-work-is-not-cut-off" title="Permanent link">&para;</a></h3>
+<p><code>zeline update</code> and <code>zeline gateway restart</code> <strong>drain</strong> before stopping: the
+gateway stops accepting new messages, lets any agent turn already running
+finish, and only then exits. A build, install, or long analysis in progress is
+not killed mid-way, and a message that arrives during the drain is answered
+with a short "finishing current work before restarting" notice instead of being
+dropped.</p>
+<p>If a gateway was running, <code>zeline update</code> brings it back automatically on the
+updated code — including when the update itself fails, so you are never left
+with a stopped gateway.</p>
+<p>Tune or disable the wait with <code>agent.restart_drain_timeout</code> (seconds, default
+<code>30</code>; <code>0</code> restores the old immediate stop). If the drain does not finish in
+time, Zeline escalates to a forced stop <strong>and says so</strong> rather than reporting a
+clean restart.</p>
+<h3 id="version-and-update-from-telegram">Version and update from Telegram<a class="headerlink" href="#version-and-update-from-telegram" title="Permanent link">&para;</a></h3>
+<p>A phone-only install never has to reach for a shell:</p>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/version</code></td>
+<td>Installed build vs. the latest release, plus whether an update is already running</td>
+</tr>
+<tr>
+<td><code>/update</code></td>
+<td>Runs the update and reports the outcome in the chat</td>
+</tr>
+</tbody>
+</table>
+<p><code>/version</code> is read-only and safe for anyone on the allowlist. <code>/update</code> is
+<strong>owner-only</strong> — it replaces the installed package and restarts the gateway for
+every user of that bot, so only the first chat ID in the allowlist may run it,
+and a bot with no allowlist has it disabled entirely.</p>
+<p>The update cannot run inside the gateway it is updating: <code>zeline update</code> drains
+that gateway and, if the drain times out, escalates to a forced stop on its
+process group. So <code>/update</code> spawns a <strong>detached</strong> updater in its own session,
+which then drives the update and posts progress directly through the Bot API —
+the gateway is deliberately down for most of it. Expect roughly a minute of
+unreachability. The outcome message reports the version read back from a fresh
+interpreter, so it can never claim success at the old number, and a lock file
+makes two concurrent updates impossible. The full transcript is written to
+<code>~/.zeline/logs/self-update.log</code>.</p>
+<p>From a git checkout <code>/update</code> deliberately refuses and prints the two commands to
+run instead, because installing an uncommitted working tree from a chat message
+is not what "update" should mean.</p>
+<p>On Windows there is no <code>SIGUSR1</code>, so restart uses the standard managed stop
+path.</p>
+<h2 id="data-and-uninstall">Data and uninstall<a class="headerlink" href="#data-and-uninstall" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Default location</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Runtime / private Python</td>
+<td><code>~/.local/share/zeline</code></td>
+</tr>
+<tr>
+<td>CLI command</td>
+<td><code>~/.local/bin/zeline</code> (or platform command directory)</td>
+</tr>
+<tr>
+<td>Config and owner data</td>
+<td><code>~/.zeline</code></td>
+</tr>
+</tbody>
+</table>
+<p>Remove the program but keep your data:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>rm<span class="w"> </span>-rf<span class="w"> </span>~/.local/share/zeline<span class="w"> </span>~/.local/bin/zeline
+</code></pre></div>
+<p>Remove everything, including local configuration and sessions:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>rm<span class="w"> </span>-rf<span class="w"> </span>~/.local/share/zeline<span class="w"> </span>~/.local/bin/zeline<span class="w"> </span>~/.zeline
+</code></pre></div>
+<p>On Windows, remove the installed <code>zeline.exe</code>/package with the Python selected
+by the installer, and delete <code>%USERPROFILE%\.zeline</code> only if you also want to
+delete local data.</p>
+<h2 id="verify-and-troubleshoot">Verify and troubleshoot<a class="headerlink" href="#verify-and-troubleshoot" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>zeline<span class="w"> </span>--version
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>zeline<span class="w"> </span>doctor
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>zeline<span class="w"> </span>tools<span class="w"> </span>list
+<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>zeline<span class="w"> </span>gateway<span class="w"> </span>list
+</code></pre></div>
+<ul>
+<li><strong><code>zeline: command not found</code></strong> — open a new terminal or add
+  <code>~/.local/bin</code> to <code>PATH</code>.</li>
+<li><strong>Linux says <code>No module named venv</code></strong> — install <code>python3-venv</code>.</li>
+<li><strong>macOS uses an old Apple Python</strong> — run <code>brew install python</code>, then rerun.</li>
+<li><strong>iSH gateway stops</strong> — iOS suspended the app; keep iSH foreground or run the
+  gateway on Termux/Linux/macOS/Windows.</li>
+<li><strong>Windows box characters look wrong</strong> — use Windows Terminal or PowerShell 7.</li>
+</ul>
+<p>Repository and issue tracker:
+<a href="https://github.com/Mftrferdinand/Zeline">github.com/Mftrferdinand/Zeline</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "search.highlight", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
