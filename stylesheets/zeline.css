@@ -1,53 +1,53 @@
-/* Zeline docs — brand: darknavy on paper (light) / readable deep-navy dark mode */
+/* Zeline docs — paper cream / dark navy, aligned with zeline.dev */
 
-/* ---------- LIGHT MODE: dark navy on paper cream ---------- */
 :root,
 [data-md-color-scheme="default"] {
-  --zl-navy: #0a1568;        /* dark navy — main brand color */
+  --zl-navy: #0a1568;
   --zl-navy-deep: #060d3d;
-  --zl-navy-soft: #12277e;
+  --zl-paper: #f4f1ea;
+  --zl-ink: #17161a;
+  --zl-line: #e2ddd0;
 
-  --md-default-bg-color: #f4f1ea;      /* paper cream from zeline.dev */
+  --md-default-bg-color: #f4f1ea;
   --md-default-fg-color: #17161a;
-  --md-primary-fg-color: #0a1568;      /* header/nav text on navy */
-  --md-primary-bg-color: #0a1568;      /* header bar = dark navy */
+  --md-primary-fg-color: #0a1568;
+  --md-primary-bg-color: #0a1568;
   --md-accent-fg-color: #0a84ff;
-  --md-typeset-a-color: #12277e;       /* links: dark navy */
+  --md-typeset-a-color: #12277e;
   --md-code-bg-color: #efeadf;
   --md-code-fg-color: #17161a;
 }
 
-/* ---------- DARK MODE: deep near-black navy, calm & readable ---------- */
 [data-md-color-scheme="slate"] {
-  --md-default-bg-color: #0b0f1e;      /* near-black navy, NOT saturated blue */
-  --md-default-fg-color: #e3e7f4;      /* soft off-white text */
-  --md-primary-bg-color: #060b1c;      /* header darker than page */
+  --md-default-bg-color: #0b0f1e;
+  --md-default-fg-color: #e3e7f4;
+  --md-primary-bg-color: #060b1c;
   --md-primary-fg-color: #e3e7f4;
   --md-accent-fg-color: #7c9aff;
-  --md-typeset-a-color: #9db1ff;       /* periwinkle links, easy on eyes */
+  --md-typeset-a-color: #9db1ff;
   --md-code-bg-color: #111834;
   --md-code-fg-color: #dfe4ff;
   --md-default-fg-color--light: #aab3cc;
   --md-default-fg-color--lighter: #7d88a8;
 }
 
-/* ---------- Base typography ---------- */
-body {
-  font-family: "Inter Tight", system-ui, -apple-system, sans-serif !important;
-}
-code, pre, .md-typeset code {
-  font-family: "JetBrains Mono", ui-monospace, monospace !important;
-}
 .md-typeset {
-  font-size: .82rem;
-  line-height: 1.62;
+  font-size: .92rem;
+  line-height: 1.65;
 }
-.md-typeset h1 { letter-spacing: -.01em; font-weight: 500; }
-.md-typeset h2 { font-weight: 500; letter-spacing: -.005em; }
+.md-typeset h1 {
+  font-weight: 500;
+  letter-spacing: -.02em;
+  font-size: 1.85em;
+}
+.md-typeset h2 {
+  font-weight: 500;
+  letter-spacing: -.01em;
+  margin-top: 1.6em;
+}
 .md-typeset a { text-decoration: none; }
 .md-typeset a:hover { color: #0a84ff; }
 
-/* ---------- Header: solid dark navy (was bright cobalt gradient) ---------- */
 .md-header {
   background: #0a1568;
   box-shadow: none;
@@ -56,48 +56,28 @@ code, pre, .md-typeset code {
   background: #060b1c;
 }
 
-/* ---------- Sidebar nav ---------- */
-.md-nav { font-size: .74rem; }
+.md-nav { font-size: .78rem; }
 .md-nav__item--active > .md-nav__link {
-  color: #12277e;
+  color: #0a1568;
   font-weight: 600;
 }
 [data-md-color-scheme="slate"] .md-nav__item--active > .md-nav__link {
   color: #9db1ff;
 }
-[data-md-color-scheme="slate"] .md-nav__link {
-  color: #aab3cc;
-}
-[data-md-color-scheme="slate"] .md-nav__link:hover {
-  color: #e3e7f4;
-}
+[data-md-color-scheme="slate"] .md-nav__link { color: #aab3cc; }
+[data-md-color-scheme="slate"] .md-nav__link:hover { color: #e3e7f4; }
 
-/* ---------- Tabs ---------- */
-.md-tabs { background: #060d3d; }
-[data-md-color-scheme="slate"] .md-tabs { background: #04081a; }
-.md-tabs__link { color: rgba(238,241,255,.75); }
-.md-tabs__link--active, .md-tabs__link:hover { color: #eef1ff; }
-
-/* ---------- Code blocks & inline code ---------- */
 .md-typeset code {
   border-radius: 4px;
-  padding: .1em .35em;
+  padding: .12em .38em;
 }
 .md-typeset pre > code { border-radius: 8px; }
-
-/* dark mode: make sure code text is readable, not navy-on-navy */
 [data-md-color-scheme="slate"] .md-typeset code {
   background-color: #111834;
   color: #dfe4ff;
 }
-[data-md-color-scheme="slate"] .md-typeset pre {
-  color: #dfe4ff;
-}
 
-/* ---------- Tables: soft lines, readable in both modes ---------- */
-.md-typeset table:not([class]) {
-  border-collapse: collapse;
-}
+.md-typeset table:not([class]) { border-collapse: collapse; }
 .md-typeset table:not([class]) th {
   background: rgba(10, 21, 104, .08);
   color: #0a1568;
@@ -106,14 +86,11 @@ code, pre, .md-typeset code {
   background: rgba(124, 154, 255, .10);
   color: #e3e7f4;
 }
-.md-typeset table:not([class]) td {
-  border-top: 1px solid #e2ddd0;
-}
+.md-typeset table:not([class]) td { border-top: 1px solid #e2ddd0; }
 [data-md-color-scheme="slate"] .md-typeset table:not([class]) td {
   border-top: 1px solid #1e2748;
 }
 
-/* ---------- Admonitions & details ---------- */
 .md-typeset .admonition,
 .md-typeset details {
   border-radius: 10px;
@@ -126,47 +103,65 @@ code, pre, .md-typeset code {
   background-color: #0d1326;
 }
 
-/* ---------- Search overlay ---------- */
-[data-md-color-scheme="slate"] .md-search__form {
-  background: #060b1c;
-}
+[data-md-color-scheme="slate"] .md-search__form { background: #060b1c; }
 
-/* ---------- Footer ---------- */
-.md-footer { background: #060d3d; }
+.md-footer { background: #0a1568; }
 [data-md-color-scheme="slate"] .md-footer { background: #04081a; }
 .md-footer-meta {
-  font-family: "JetBrains Mono", monospace;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
   font-size: 11px;
-  letter-spacing: .09em;
+  letter-spacing: .08em;
   text-transform: uppercase;
 }
 
-/* ---------- Hero on home: navy card with white orbit mark ---------- */
-.zeline-hero {
+/* Home cards — replace the floating navy hero */
+.zeline-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin: 1.4em 0 1.8em;
+}
+@media (max-width: 760px) {
+  .zeline-cards { grid-template-columns: 1fr; }
+}
+.zeline-card {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: .6rem;
-  margin: 1.2em auto 2em;
-  padding: 1.6rem 1.2rem;
-  background: linear-gradient(180deg, #0a1568 0%, #060d3d 100%);
-  border-radius: 14px;
-  width: fit-content;
-  min-width: min(420px, 100%);
+  gap: .35rem;
+  padding: 1.05rem 1.1rem 1.15rem;
+  border: 1px solid #e2ddd0;
+  border-radius: 12px;
+  background: #fcfbf8;
+  color: inherit !important;
+  text-decoration: none !important;
+  transition: border-color .15s, transform .15s;
 }
-.zeline-hero img {
-  width: 120px;
-  height: auto;
-  display: block;
+.zeline-card:hover {
+  border-color: #0a1568;
+  transform: translateY(-1px);
 }
-.zeline-hero-sub {
-  margin: 0;
-  color: #eef1ff;
+[data-md-color-scheme="slate"] .zeline-card {
+  background: #0d1326;
+  border-color: #1e2748;
+}
+[data-md-color-scheme="slate"] .zeline-card:hover { border-color: #9db1ff; }
+.zeline-card-kicker {
   font-family: "JetBrains Mono", ui-monospace, monospace;
-  font-size: 11.5px;
-  letter-spacing: .08em;
+  font-size: 11px;
+  letter-spacing: .1em;
   text-transform: uppercase;
-  text-align: center;
+  color: #0a84ff;
 }
-.zeline-hero-sub a { color: #9db1ff; }
-.zeline-hero-sub a:hover { color: #eef1ff; }
+.zeline-card strong {
+  font-weight: 600;
+  font-size: 1.05rem;
+  letter-spacing: -.01em;
+  color: #17161a;
+}
+[data-md-color-scheme="slate"] .zeline-card strong { color: #e3e7f4; }
+.zeline-card-copy {
+  color: #6b6874;
+  font-size: .86rem;
+  line-height: 1.45;
+}
+[data-md-color-scheme="slate"] .zeline-card-copy { color: #aab3cc; }

@@ -18,6 +18,12 @@
       
       
         
+          <link rel="alternate" href="/" hreflang="en">
+        
+          <link rel="alternate" href="/README.id/" hreflang="id">
+        
+          <link rel="alternate" href="/README.zh/" hreflang="zh">
+        
       
       
       <link rel="icon" href="assets/logo-icon-navy.png">
@@ -46,8 +52,8 @@
         
         
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
-        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter+Tight:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter Tight";--md-code-font:"JetBrains Mono"}</style>
       
     
     
@@ -69,7 +75,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="blue">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -90,7 +96,9 @@
     
       
 
-<header class="md-header" data-md-component="header">
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="https://zeline.dev" title="Zeline Docs" class="md-header__button md-logo" aria-label="Zeline Docs" data-md-component="logo">
       
@@ -124,7 +132,7 @@
     
     
     
-    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="blue"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
     
       <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
@@ -134,7 +142,7 @@
     
     
     
-    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="blue"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
     
       <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
@@ -147,6 +155,38 @@
     
       <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
     
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="Select language">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="/" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="/README.id/" hreflang="id" class="md-select__link">
+              Bahasa Indonesia
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="/README.zh/" hreflang="zh" class="md-select__link">
+              中文
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
     
     
       
@@ -211,131 +251,6 @@
       
         
           
-            
-<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
-  <div class="md-grid">
-    <ul class="md-tabs__list">
-      
-        
-  
-  
-  
-    
-  
-  
-    <li class="md-tabs__item md-tabs__item--active">
-      <a href="." class="md-tabs__link">
-        
-  
-  
-    
-  
-  Home
-
-      </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
-  
-    <li class="md-tabs__item">
-      <a href="installation/" class="md-tabs__link">
-        
-  
-  
-    
-  
-  Installation
-
-      </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
-  
-    <li class="md-tabs__item">
-      <a href="extending/" class="md-tabs__link">
-        
-  
-  
-    
-  
-  Extending Zeline
-
-      </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
-  
-    <li class="md-tabs__item">
-      <a href="agent-working-style-and-reliability/" class="md-tabs__link">
-        
-  
-  
-    
-  
-  Agent Working Style
-
-      </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
-  
-    <li class="md-tabs__item">
-      <a href="README.id/" class="md-tabs__link">
-        
-  
-  
-    
-  
-  Docs (Bahasa Indonesia)
-
-      </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
-  
-    <li class="md-tabs__item">
-      <a href="README.zh/" class="md-tabs__link">
-        
-  
-  
-    
-  
-  Docs (中文)
-
-      </a>
-    </li>
-  
-
-      
-    </ul>
-  </div>
-</nav>
-          
         
       
       <main class="md-main" data-md-component="main">
@@ -349,10 +264,8 @@
                     
 
 
-  
 
-
-<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href="https://zeline.dev" title="Zeline Docs" class="md-nav__button md-logo" aria-label="Zeline Docs" data-md-component="logo">
       
@@ -443,10 +356,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#features" class="md-nav__link">
+  <a href="#quick-start" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Features
+        Quick start
       
     </span>
   </a>
@@ -454,248 +367,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#install" class="md-nav__link">
+  <a href="#in-these-docs" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Install
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Install">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#pypi-recommended" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        PyPI (recommended)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#termux-linux-macos-and-ish" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Termux, Linux, macOS, and iSH
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#windows-powershell" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Windows PowerShell
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#npm-any-platform-with-nodejs-18" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        npm (any platform with Node.js ≥ 18)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#verify-the-download-independently-optional" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Verify the download independently (optional)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#update" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Update
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#use-the-cli" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Use the CLI
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#connect-a-platform" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Connect a platform
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Connect a platform">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#telegram" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Telegram
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#whatsapp" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        WhatsApp
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#http-webhook" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        HTTP webhook
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#command-reference" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Command reference
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#connectors" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Connectors
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Connectors">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#google-connector-setup" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Google connector setup
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#whatsapp-connector-setup" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        WhatsApp connector setup
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#security" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Security
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#extend-it" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Extend it
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#development" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Development
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#roadmap" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Roadmap
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#license" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        License
+        In these docs
       
     </span>
   </a>
@@ -791,60 +466,6 @@
   
 
     
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="README.id/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Docs (Bahasa Indonesia)
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="README.zh/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Docs (中文)
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-    
   </ul>
 </nav>
                   </div>
@@ -872,10 +493,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#features" class="md-nav__link">
+  <a href="#quick-start" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Features
+        Quick start
       
     </span>
   </a>
@@ -883,248 +504,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#install" class="md-nav__link">
+  <a href="#in-these-docs" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Install
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Install">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#pypi-recommended" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        PyPI (recommended)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#termux-linux-macos-and-ish" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Termux, Linux, macOS, and iSH
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#windows-powershell" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Windows PowerShell
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#npm-any-platform-with-nodejs-18" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        npm (any platform with Node.js ≥ 18)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#verify-the-download-independently-optional" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Verify the download independently (optional)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#update" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Update
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#use-the-cli" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Use the CLI
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#connect-a-platform" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Connect a platform
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Connect a platform">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#telegram" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Telegram
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#whatsapp" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        WhatsApp
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#http-webhook" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        HTTP webhook
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#command-reference" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Command reference
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#connectors" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Connectors
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Connectors">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#google-connector-setup" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Google connector setup
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#whatsapp-connector-setup" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        WhatsApp connector setup
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#security" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Security
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#extend-it" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Extend it
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#development" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Development
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#roadmap" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Roadmap
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#license" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        License
+        In these docs
       
     </span>
   </a>
@@ -1148,304 +531,39 @@
 
 
 
-<div class="zeline-hero">
-  <img src="assets/logo-mark-navy.png" alt="Zerolinear" draggable="false">
-  <p class="zeline-hero-sub">— by Zerolinear, an AI research lab · <a href="https://zeline.dev">zeline.dev</a></p>
-</div>
-
 <h1 id="zeline">Zeline<a class="headerlink" href="#zeline" title="Permanent link">&para;</a></h1>
-<p>Zeline is an open-source agentic AI framework developed by <strong>Zerolinear</strong>. It's a flexible foundation for building AI agents that can reason, use tools, interact with external systems, and carry out complex, multi-step workflows.</p>
-<p>Rather than being tied to a single model, provider, or infrastructure, Zeline is built around flexibility. Connect your preferred AI models and OpenAI-compatible endpoints, configure providers, integrate tools, and extend the framework to fit how you want your agents to work — models and providers can be swapped without rebuilding the system, keeping the agent architecture portable and adaptable.</p>
-<p>Run it locally for development or deploy it to your own server or cloud, and connect it to the interfaces you use. The goal is to keep control in the developer's hands: your models, your tools, your infrastructure, your data. Open-source, model-agnostic, extensible, and developer-first.</p>
-<h2 id="features">Features<a class="headerlink" href="#features" title="Permanent link">&para;</a></h2>
+<p>Open-source agentic AI framework by <a href="https://zeline.dev">Zerolinear</a>.
+Build agents that reason, use tools, and run on your own models — locally or on a server you control.</p>
+<div class="zeline-cards">
+<p><a class="zeline-card" href="installation/">
+<span class="zeline-card-kicker">Start</span>
+<strong>Install</strong>
+<span class="zeline-card-copy">One-line setup on Linux, macOS, Termux, and Windows. Then <code>zeline setup</code>.</span>
+</a></p>
+<p><a class="zeline-card" href="extending/">
+<span class="zeline-card-kicker">Build</span>
+<strong>Extend</strong>
+<span class="zeline-card-copy">Custom tools, plugin hooks, OpenAPI, and MCP — without forking the repo.</span>
+</a></p>
+<p><a class="zeline-card" href="https://github.com/Mftrferdinand/Zeline">
+<span class="zeline-card-kicker">Source</span>
+<strong>GitHub</strong>
+<span class="zeline-card-copy">MIT license. Issues, releases, and the full framework live here.</span>
+</a></p>
+</div>
+<h2 id="quick-start">Quick start<a class="headerlink" href="#quick-start" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>curl<span class="w"> </span>-fsSLO<span class="w"> </span>--proto<span class="w"> </span><span class="s1">'=https'</span><span class="w"> </span>--tlsv1.2<span class="w"> </span>https://github.com/Mftrferdinand/Zeline/releases/download/v0.3.8/install.sh<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>bash<span class="w"> </span>install.sh
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>zeline<span class="w"> </span>setup
+</code></pre></div>
+<p>Need npm or pip instead? See the <a href="installation/">installation guide</a>.</p>
+<h2 id="in-these-docs">In these docs<a class="headerlink" href="#in-these-docs" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>Agent core</strong> — an OpenAI-compatible agent loop with tool calling, plus an interactive CLI and one-shot queries</li>
-<li><strong>Model-agnostic</strong> — works with OpenAI, OpenRouter, vLLM, Ollama, and any OpenAI- or Anthropic-compatible API; swap model or provider without rebuilding</li>
-<li><strong>API key pools</strong> — register several keys per provider (<code>zeline keys add</code>); a key that hits 401/403 is retired and a rate-limited (429) key is rested while requests automatically rotate to the next healthy key</li>
-<li><strong>Persistent memory</strong> — long-term memory isolated per platform identity</li>
-<li><strong>Session persistence</strong> — conversation history stored in SQLite (<code>~/.zeline/sessions.db</code>), so it survives gateway restarts</li>
-<li><strong>Skills</strong> — reusable Markdown procedures loaded on demand; see the <a href="zeline/skills/ZENITH_INDEX.md">Zenith skill index</a> for the full bundled catalog</li>
-<li><strong>Messaging gateways</strong> — Telegram (long polling, commands, attachments), WhatsApp (Baileys QR pairing), and an authenticated local HTTP webhook</li>
-<li><strong>Built-in tools</strong> — web search, web fetch, deep research, HTTP requests, file read/write/edit/search, image analysis, text-to-image generation, code execution, shell, and sub-agent delegation</li>
-<li><strong>Lazy tool schemas</strong> — the model is sent a small core of schemas plus a one-line summary of every other tool, and fetches full parameters on demand with <code>tool_search</code>. On the <code>full</code> profile that is 6,793 characters per request instead of 17,089 (60% less), without hiding any capability: names stay visible and a listed tool can be called directly. It engages only where the saving outweighs the extra round trip, so the public <code>safe</code> profile keeps sending everything; run <code>zeline toolsearch</code> for the numbers on your own tool set</li>
-<li><strong>Real browser control</strong> — the <code>browser</code> tool drives an installed Chromium/Chrome over the Chrome DevTools Protocol (open, click, type, read, screenshot), so JavaScript-rendered and logged-in pages are reachable where raw HTML fetching is not. No Playwright or Puppeteer dependency</li>
-<li><strong>Scheduled jobs inside the gateway</strong> — <code>zeline cron</code> runs interval or cron-expression jobs in the running gateway process, reusing its config, provider key, and workspace, and delivers results to the chat that owns the job</li>
-<li><strong>Language-server intelligence</strong> — <code>code_intel</code> asks a real LSP server for diagnostics, definitions, references, hover, and symbols; servers are discovered on PATH and never downloaded, falling back to the project linter when none is installed</li>
-<li><strong>Operator extension points</strong> — Python plugin hooks can audit, rewrite, or block any tool call before it runs, plain Python files can be loaded as <code>custom_*</code> tools, and local OpenAPI 3 documents become namespaced <code>api_*</code> tools without handwritten wrappers</li>
-<li><strong>Nothing is silently lost</strong> — oversized tool output is written to disk and replaced by a pointer with a head/tail preview, and conversation turns evicted to keep the context window bounded are appended to an on-disk transcript plus a deterministic digest (what you asked, which files were touched, where the archive lives) injected at the front of history. Both are recoverable with <code>read_file</code>, and neither costs a model call</li>
-<li><strong>Undo</strong> — writes and edits are snapshotted first; <code>zeline undo</code> lists and restores them</li>
-<li><strong>Human-in-the-loop</strong> — <code>ask_user</code> pauses the run to ask you one question, with tappable options on messaging gateways and a keyboard prompt in the CLI</li>
-<li><strong>Format on write</strong> — after the agent writes or edits a file, the project's installed formatter (ruff, gofmt, biome, prettier, rustfmt, shfmt, …) runs on it, so generated code matches your repo style; configurable per extension and never overwrites a failed write</li>
-<li><strong>Sub-agents</strong> — delegate a focused subtask to an isolated child agent that returns only its final summary, keeping the main context clean (depth-limited; owner profiles only)</li>
-<li><strong>MCP client</strong> — connect external MCP servers (stdio or HTTP) and expose their tools automatically</li>
-<li><strong>Scoped tool profiles</strong> — gate access per surface:</li>
-<li><code>safe</code> — memory and public skills only; default for messaging gateways</li>
-<li><code>workspace</code> — <code>safe</code> plus files inside the owner workspace</li>
-<li><code>full</code> — <code>workspace</code> plus shell access; intended for the local owner CLI</li>
+<li><a href="installation/">Installation</a> — platforms, PATH, updates, uninstall</li>
+<li><a href="extending/">Extending Zeline</a> — custom tools, plugins, OpenAPI, MCP</li>
+<li><a href="agent-working-style-and-reliability/">Agent working style</a> — how the agent actually behaves</li>
+<li><a href="README.id/">Bahasa Indonesia</a> · <a href="README.zh/">中文</a></li>
 </ul>
-<h2 id="install">Install<a class="headerlink" href="#install" title="Permanent link">&para;</a></h2>
-<p><strong>Requirements:</strong> Python 3.10+. WhatsApp also needs Node.js 18+ and npm. POSIX
-platforms use a private Python environment; Windows uses a per-user package
-install. Neither requires root/Administrator access.</p>
-<h3 id="pypi-recommended">PyPI (recommended)<a class="headerlink" href="#pypi-recommended" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>zeline
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="c1"># or, in an isolated tool environment:</span>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>uv<span class="w"> </span>tool<span class="w"> </span>install<span class="w"> </span>zeline
-</code></pre></div>
-<p>Then <code>zeline setup</code>. Zeline is on PyPI via Trusted Publishing (OIDC) — no API
-token stored in the repository, same verified artifacts as the release.</p>
-<h3 id="termux-linux-macos-and-ish">Termux, Linux, macOS, and iSH<a class="headerlink" href="#termux-linux-macos-and-ish" title="Permanent link">&para;</a></h3>
-<p>One line, and it needs no existing Python tooling — it provisions a private
-environment for you:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>curl<span class="w"> </span>-fsSLO<span class="w"> </span>--proto<span class="w"> </span><span class="s1">'=https'</span><span class="w"> </span>--tlsv1.2<span class="w"> </span>https://github.com/Mftrferdinand/Zeline/releases/download/v0.3.8/install.sh<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>bash<span class="w"> </span>install.sh
-</code></pre></div>
-<p>Then <code>zeline setup</code>. The installer downloads the versioned wheel and verifies it
-against <code>SHA256SUMS</code> itself before installing, so there is nothing to check by
-hand. On iSH, run <code>apk add bash curl python3</code> first.</p>
-<h3 id="windows-powershell">Windows PowerShell<a class="headerlink" href="#windows-powershell" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nb">iwr </span><span class="n">-UseBasicParsing</span> <span class="n">https</span><span class="p">://</span><span class="n">github</span><span class="p">.</span><span class="n">com</span><span class="p">/</span><span class="n">Mftrferdinand</span><span class="p">/</span><span class="n">Zeline</span><span class="p">/</span><span class="n">releases</span><span class="p">/</span><span class="n">download</span><span class="p">/</span><span class="n">v0</span><span class="p">.</span><span class="n">3</span><span class="p">.</span><span class="n">8</span><span class="p">/</span><span class="n">install</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-OutFile</span> <span class="n">install</span><span class="p">.</span><span class="n">ps1</span><span class="p">;</span> <span class="p">.\</span><span class="n">install</span><span class="p">.</span><span class="n">ps1</span>
-</code></pre></div>
-<p>Then <code>zeline setup</code>.</p>
-<h3 id="npm-any-platform-with-nodejs-18">npm (any platform with Node.js ≥ 18)<a class="headerlink" href="#npm-any-platform-with-nodejs-18" title="Permanent link">&para;</a></h3>
-<p>If you already use npm, the wrapper does the same verified wheel install on
-first run — no <code>curl</code> or <code>iwr</code> needed:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>npm<span class="w"> </span>install<span class="w"> </span>-g<span class="w"> </span>zeline
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>zeline<span class="w"> </span>setup
-</code></pre></div>
-<p>The wrapper detects Python 3.10+ on your <code>PATH</code>, downloads the same versioned
-wheel and <code>SHA256SUMS</code> from the GitHub release, verifies the checksum, and
-installs into the same private runtime (<code>~/.local/share/zeline</code>). The <code>curl</code>
-and <code>iwr</code> routes below stay available for machines without Node.js.</p>
-<h3 id="verify-the-download-independently-optional">Verify the download independently (optional)<a class="headerlink" href="#verify-the-download-independently-optional" title="Permanent link">&para;</a></h3>
-<p>The installer's own wheel check comes from the same release as the installer, so
-it proves integrity, not origin. For that, verify the release's build-provenance
-attestation with GitHub CLI — an independent signature chain:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>gh<span class="w"> </span>attestation<span class="w"> </span>verify<span class="w"> </span>install.sh<span class="w"> </span>--repo<span class="w"> </span>Mftrferdinand/Zeline
-</code></pre></div>
-<p>See the complete <a href="docs/installation.md">installation guide</a> for package
-prerequisites, platform limitations, checkout installs, updates, PATH fixes, and
-uninstall instructions.</p>
-<h3 id="update">Update<a class="headerlink" href="#update" title="Permanent link">&para;</a></h3>
-<p>One command on every platform — Termux, Linux, macOS, iSH, and Windows
-PowerShell:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>zeline<span class="w"> </span>update
-</code></pre></div>
-<p>It fetches the latest release installer, verifies its SHA-256 before running it,
-and updates in place. Your config, sessions, memory, and private skills under
-<code>~/.zeline</code> are untouched. From a git checkout it rebuilds your local source
-instead.</p>
-<p>Check what you are on, and whether a release is waiting:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>zeline<span class="w"> </span>version
-</code></pre></div>
-<p>Both are also available from Telegram, so a phone-only install never needs a
-shell: <strong><code>/version</code></strong> reports the installed build against the latest release, and
-<strong><code>/update</code></strong> performs the update. <code>/update</code> is owner-only and runs in a detached
-process — the gateway finishes in-flight work, stops, installs, and relaunches
-itself, with progress posted back to the chat. It refuses to run from a source
-checkout, where installing an uncommitted working tree would be a surprise.</p>
-<p>Then inspect the available integrations and health:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>zeline<span class="w"> </span>tools<span class="w"> </span>list
-<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>zeline<span class="w"> </span>mcp<span class="w"> </span>list
-<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>zeline<span class="w"> </span>doctor
-<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>zeline<span class="w"> </span>gateway<span class="w"> </span>list
-</code></pre></div>
-<h2 id="use-the-cli">Use the CLI<a class="headerlink" href="#use-the-cli" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>zeline
-<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="c1"># or</span>
-<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>zeline<span class="w"> </span>chat<span class="w"> </span>-q<span class="w"> </span><span class="s2">"What can you do?"</span>
-</code></pre></div>
-<h2 id="connect-a-platform">Connect a platform<a class="headerlink" href="#connect-a-platform" title="Permanent link">&para;</a></h2>
-<h3 id="telegram">Telegram<a class="headerlink" href="#telegram" title="Permanent link">&para;</a></h3>
-<p>Create a bot with <a href="https://t.me/BotFather">@BotFather</a>, then run:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>zeline<span class="w"> </span>gateway<span class="w"> </span>setup<span class="w"> </span>telegram
-<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>zeline<span class="w"> </span>gateway<span class="w"> </span>start
-</code></pre></div>
-<p>An empty allowlist makes the bot public. Public gateways always use the <code>safe</code> tool profile by default, so users cannot access host files or a shell.</p>
-<p>Telegram commands:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>/start, /help             Show command help
-<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>/status                   Show provider and session status
-<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>/models                   Show the active model
-<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>/model &lt;provider/model&gt;   Persistently switch this installation's model
-<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>/new                      Clear the current chat history
-<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>/restart                  Restart the current Telegram chat session
-<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>/stop                     Stop this Zeline gateway process
-<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>/logs                     Show how to inspect gateway logs from the installation terminal
-</code></pre></div>
-<p>Attachments up to 256 KB are accepted for text, JSON, CSV, common code/config files, and ZIP archives containing safe text files. Text-based PDFs are extracted with <code>pypdf</code>. Images are accepted as attachment metadata; pixel analysis needs a vision-capable provider.</p>
-<h3 id="whatsapp">WhatsApp<a class="headerlink" href="#whatsapp" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>zeline<span class="w"> </span>gateway<span class="w"> </span>setup<span class="w"> </span>whatsapp
-<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>zeline<span class="w"> </span>gateway<span class="w"> </span>start
-</code></pre></div>
-<p>On first start, Zeline installs its Baileys bridge under <code>~/.zeline/wa-bridge/</code> and prints a QR code. In WhatsApp, open <strong>Linked devices</strong>, choose <strong>Link a device</strong>, then scan it.</p>
-<blockquote>
-<p>This gateway uses WhatsApp multi-device through Baileys, not the Meta Business API. Make sure your use complies with WhatsApp policies.</p>
-</blockquote>
-<h3 id="http-webhook">HTTP webhook<a class="headerlink" href="#http-webhook" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>zeline<span class="w"> </span>gateway<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>webhook
-<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>zeline<span class="w"> </span>gateway<span class="w"> </span>start
-</code></pre></div>
-<p>The default listener is <code>127.0.0.1:8765</code>. It does not listen on the public internet.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>curl<span class="w"> </span>http://127.0.0.1:8765/health
-<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>
-<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://127.0.0.1:8765/message<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="w">  </span>-H<span class="w"> </span><span class="s1">'Content-Type: application/json'</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="w">  </span>-H<span class="w"> </span><span class="s1">'Authorization: Bearer YOUR_WEBHOOK_TOKEN'</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">'{"chat_id":"demo-user","text":"Hello Zeline"}'</span>
-</code></pre></div>
-<p>Show masked configuration with:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>zeline<span class="w"> </span>config<span class="w"> </span>show
-</code></pre></div>
-<p>If you expose the webhook through a tunnel or reverse proxy, use HTTPS and keep token authentication enabled.</p>
-<h2 id="command-reference">Command reference<a class="headerlink" href="#command-reference" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>zeline                         First run: gateway onboarding; later: local chat
-<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>zeline chat -q "..."           Send one query after gateway + model setup
-<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>zeline setup                   First run: gateway picker; later: setup center
-<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>zeline setup &lt;section&gt;         Configure gateway|model|tools|integrations|agent
-<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>zeline model                   Detect protocol, fetch models, and choose one
-<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>zeline keys                    Manage provider API key pool (auto-rotates on 401/403/429)
-<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a>zeline tools list              List native tools, profiles, and enabled state
-<a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a>zeline tools profile &lt;name&gt;    Set safe|workspace|full for the local CLI
-<a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a>zeline tools enable|disable T  Toggle one native tool for new sessions
-<a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a>zeline tools workspace &lt;path&gt;  Set the owner workspace root
-<a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a>zeline tools openapi-add FILE  Install a local OpenAPI 3 YAML/JSON document
-<a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a>zeline tools openapi           List parsed API operations and credential variable names
-<a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a>zeline doctor                  Check dependencies and configuration
-<a id="__codelineno-15-14" name="__codelineno-15-14" href="#__codelineno-15-14"></a>zeline config path             Print the configuration location
-<a id="__codelineno-15-15" name="__codelineno-15-15" href="#__codelineno-15-15"></a>zeline config show             Print configuration with masked secrets
-<a id="__codelineno-15-16" name="__codelineno-15-16" href="#__codelineno-15-16"></a>zeline gateway setup [name]    Configure telegram, whatsapp, or webhook
-<a id="__codelineno-15-17" name="__codelineno-15-17" href="#__codelineno-15-17"></a>zeline gateway enable &lt;name&gt;   Enable a gateway
-<a id="__codelineno-15-18" name="__codelineno-15-18" href="#__codelineno-15-18"></a>zeline gateway disable &lt;name&gt;  Disable a gateway
-<a id="__codelineno-15-19" name="__codelineno-15-19" href="#__codelineno-15-19"></a>zeline gateway list            Show configured gateways
-<a id="__codelineno-15-20" name="__codelineno-15-20" href="#__codelineno-15-20"></a>zeline gateway token webhook   Explicitly reveal a webhook token
-<a id="__codelineno-15-21" name="__codelineno-15-21" href="#__codelineno-15-21"></a>zeline gateway start           Run enabled gateways in the background
-<a id="__codelineno-15-22" name="__codelineno-15-22" href="#__codelineno-15-22"></a>zeline gateway stop            Stop the background gateway process
-<a id="__codelineno-15-23" name="__codelineno-15-23" href="#__codelineno-15-23"></a>zeline gateway status          Show background gateway status
-<a id="__codelineno-15-24" name="__codelineno-15-24" href="#__codelineno-15-24"></a>zeline gateway log             Print gateway logs
-<a id="__codelineno-15-25" name="__codelineno-15-25" href="#__codelineno-15-25"></a>zeline gateway run             Run enabled gateways in the foreground
-<a id="__codelineno-15-26" name="__codelineno-15-26" href="#__codelineno-15-26"></a>zeline skills                  List installed skills (catalog: zeline/skills/ZENITH_INDEX.md)
-<a id="__codelineno-15-27" name="__codelineno-15-27" href="#__codelineno-15-27"></a>zeline memory                  Print local CLI memory
-<a id="__codelineno-15-28" name="__codelineno-15-28" href="#__codelineno-15-28"></a>zeline memory consolidate      Remove duplicate and expired facts from local memory
-<a id="__codelineno-15-29" name="__codelineno-15-29" href="#__codelineno-15-29"></a>zeline proactive status        Show the proactive briefing job
-<a id="__codelineno-15-30" name="__codelineno-15-30" href="#__codelineno-15-30"></a>zeline proactive enable --chat telegram:&lt;id&gt; [--time 07:00]
-<a id="__codelineno-15-31" name="__codelineno-15-31" href="#__codelineno-15-31"></a>                               Daily self-initiated digest; silent when nothing is new
-<a id="__codelineno-15-32" name="__codelineno-15-32" href="#__codelineno-15-32"></a>zeline proactive disable       Remove the briefing job
-<a id="__codelineno-15-33" name="__codelineno-15-33" href="#__codelineno-15-33"></a>zeline curator scan            List installed skills, flagging stale or duplicated ones
-<a id="__codelineno-15-34" name="__codelineno-15-34" href="#__codelineno-15-34"></a>zeline curator prune [--days 90] [--yes]
-<a id="__codelineno-15-35" name="__codelineno-15-35" href="#__codelineno-15-35"></a>                               Dry-run (default) or archive stale skills with a ledger
-<a id="__codelineno-15-36" name="__codelineno-15-36" href="#__codelineno-15-36"></a>zeline curator archive &lt;name&gt;  Archive a skill (restorable)
-<a id="__codelineno-15-37" name="__codelineno-15-37" href="#__codelineno-15-37"></a>zeline curator restore &lt;name&gt;  Bring an archived skill back
-<a id="__codelineno-15-38" name="__codelineno-15-38" href="#__codelineno-15-38"></a>zeline connect &lt;service&gt;       Link an external service (e.g. github)
-<a id="__codelineno-15-39" name="__codelineno-15-39" href="#__codelineno-15-39"></a>zeline connectors              List connectors and their link status
-<a id="__codelineno-15-40" name="__codelineno-15-40" href="#__codelineno-15-40"></a>zeline disconnect &lt;service&gt;    Unlink an external service
-</code></pre></div>
-<h2 id="connectors">Connectors<a class="headerlink" href="#connectors" title="Permanent link">&para;</a></h2>
-<p>Connectors link the agent to outside services so native tools can act on the
-operator's behalf. Credentials live in <code>~/.zeline/connectors/&lt;id&gt;.json</code>
-(mode 0600) and are never logged or exposed to the model.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>zeline connect github      # paste a personal access token (validated first)
-<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>zeline connectors          # github: connected yes/no
-<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>zeline disconnect github
-</code></pre></div>
-<p>Phase 1 ships the framework plus GitHub (list repos/issues/PRs, create issues,
-comment). Phase 2 adds Google (Gmail search/read/send, Calendar, Sheets,
-Drive) via the OAuth2 helpers in <code>zeline/connectors/oauth.py</code>. Phase 3 adds
-WhatsApp (send text/template messages) via the Business Cloud API. The five
-<code>github_*</code>, six <code>gmail_search</code>/<code>gmail_read</code>/<code>gmail_send</code>/<code>google_calendar</code>/
-<code>sheets_read</code>/<code>drive_list</code>, and two <code>whatsapp_send</code>/<code>whatsapp_template</code> native
-tools are owner-gated (<code>workspace</code>/<code>full</code> profiles).</p>
-<h3 id="google-connector-setup">Google connector setup<a class="headerlink" href="#google-connector-setup" title="Permanent link">&para;</a></h3>
-<p><code>zeline connect google</code> uses Google OAuth2, so it needs a client ID + secret
-from your own Google Cloud project (one-time, ~5 minutes):</p>
-<ol>
-<li>Go to <a href="https://console.cloud.google.com/">Google Cloud Console</a> and create
-   (or pick) a project.</li>
-<li><strong>APIs &amp; Services → Library</strong>: enable <em>Gmail API</em>, <em>Google Calendar API</em>,
-   <em>Google Sheets API</em>, and <em>Google Drive API</em>.</li>
-<li><strong>APIs &amp; Services → OAuth consent screen</strong>: choose <em>External</em>, fill the
-   app name, add your Gmail as a test user.</li>
-<li><strong>APIs &amp; Services → Credentials → Create Credentials → OAuth client ID</strong>,
-   type <em>Desktop app</em>; copy the client ID and client secret.</li>
-<li>Run <code>zeline connect google</code>, paste the ID + secret, approve in the browser.
-   On a headless box, open the printed URL on another device, then re-run with
-   <code>zeline connect google --code &lt;kode&gt;</code>.</li>
-</ol>
-<p>Tokens (with a refresh token) are stored in
-<code>~/.zeline/connectors/google.json</code> (mode 0600) and refreshed automatically.</p>
-<h3 id="whatsapp-connector-setup">WhatsApp connector setup<a class="headerlink" href="#whatsapp-connector-setup" title="Permanent link">&para;</a></h3>
-<p><code>zeline connect whatsapp</code> needs a WhatsApp Business Cloud API access token
-plus the phone number ID from your own Meta Developer app (one-time,
-~10 minutes):</p>
-<ol>
-<li>Go to <a href="https://developers.facebook.com/">Meta for Developers</a> and create
-   an app (type <em>Business</em>).</li>
-<li>Add the <strong>WhatsApp</strong> product to the app from the dashboard.</li>
-<li>Under <strong>WhatsApp → API Setup</strong>, copy the <strong>Phone number ID</strong> and generate
-   a temporary access token (or create a permanent system-user token under
-   <strong>Business settings</strong> for long-term use).</li>
-<li>Run <code>zeline connect whatsapp</code>, paste the token + phone number ID. The
-   number is validated before anything is stored.</li>
-<li>Send a test message with the <code>whatsapp_send</code> tool (or <code>zeline</code> chat).</li>
-</ol>
-<p>Note: the free test number can only message the test recipient numbers you
-register. Messaging any other number requires either an approved message
-template (<code>whatsapp_template</code>) or a verified business number inside the
-24-hour conversation window. The token lives in
-<code>~/.zeline/connectors/whatsapp.json</code> (mode 0600) and is never logged.</p>
-<p>On first launch, Zeline requires one gateway selected from an arrow-key picker:
-Telegram, WhatsApp, Webhook, or Cancel. It configures only the selected gateway,
-returns to the terminal, and directs the user to <code>zeline model</code>; local chat stays
-locked until both gateway and model setup are complete.</p>
-<p>During model setup, Zeline detects OpenAI-compatible or Anthropic APIs,
-queries the provider model endpoint, and shows a numbered picker. Secret input
-renders one <code>*</code> per character while the real API key stays hidden. If a provider
-cannot list models, Zeline requires an explicit model ID instead of accepting a
-placeholder.</p>
-<p>Zeline can safely describe its active model, provider URL, protocol, tool profile,
-and available tools through <code>runtime_info</code> and the bundled <code>self-analysis</code> skill.
-API keys and gateway tokens are never included.</p>
-<h2 id="security">Security<a class="headerlink" href="#security" title="Permanent link">&para;</a></h2>
-<ul>
-<li>Keep <code>~/.zeline/</code>, <code>.env</code>, provider keys, and bot tokens out of Git.</li>
-<li>OpenAPI credentials are read only from <code>~/.zeline/.env</code> (<code>ZELINE_OPENAPI_&lt;FILE&gt;_&lt;SCHEME&gt;</code>), never exposed in model schemas, and loaded only for <code>workspace</code>/<code>full</code> profiles.</li>
-<li>Gateway users receive the <code>safe</code> profile by default.</li>
-<li>Webhooks require a secret token and bind to loopback by default.</li>
-<li>Memory is namespaced by platform identity, for example <code>telegram:123</code> or <code>webhook:alice</code>.</li>
-<li>The WhatsApp bridge uses a random runtime token between Python and Node.</li>
-<li>The repository enables secret scanning, push protection, Dependabot, CodeQL, and dependency review.</li>
-</ul>
-<p>See <a href="SECURITY.md">SECURITY.md</a> for reporting guidance.</p>
-<h2 id="extend-it">Extend it<a class="headerlink" href="#extend-it" title="Permanent link">&para;</a></h2>
-<p>Custom Python tools, plugin hooks that can audit or block any tool call, local
-OpenAPI documents as tools, and MCP servers all work without changing the
-package. See <a href="docs/extending.md">docs/extending.md</a>.</p>
-<h2 id="development">Development<a class="headerlink" href="#development" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>python3<span class="w"> </span>-m<span class="w"> </span>unittest<span class="w"> </span>discover<span class="w"> </span>-s<span class="w"> </span>tests<span class="w"> </span>-v
-<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>ruff<span class="w"> </span>check<span class="w"> </span>zeline<span class="w"> </span>tests
-<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>python3<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>wheel<span class="w"> </span>--no-deps<span class="w"> </span>--wheel-dir<span class="w"> </span>dist<span class="w"> </span>.
-</code></pre></div>
-<p>CI runs <code>unittest</code>, not <code>pytest</code>.</p>
-<p><strong>Contributions are welcome, and you do not need write access here.</strong> Fork,
-branch, and open a pull request against <code>main</code>; it runs the same CI matrix the
-maintainer's does — Linux, Windows, macOS, and both installers:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>gh<span class="w"> </span>repo<span class="w"> </span>fork<span class="w"> </span>Mftrferdinand/Zeline<span class="w"> </span>--clone<span class="w"> </span>--remote
-<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="nb">cd</span><span class="w"> </span>Zeline<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>checkout<span class="w"> </span>-b<span class="w"> </span>fix/short-description
-<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>git<span class="w"> </span>push<span class="w"> </span>-u<span class="w"> </span>origin<span class="w"> </span>fix/short-description
-<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>gh<span class="w"> </span>pr<span class="w"> </span>create<span class="w"> </span>--repo<span class="w"> </span>Mftrferdinand/Zeline<span class="w"> </span>--base<span class="w"> </span>main
-</code></pre></div>
-<p><a href="CONTRIBUTING.md">CONTRIBUTING.md</a> has the full flow, what each CI job proves,
-and where things live. Issues labelled
-<a href="https://github.com/Mftrferdinand/Zeline/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22">good first issue</a>
-are scoped small on purpose. <a href="CHANGELOG.md">CHANGELOG.md</a> records every release
-with links to its pull requests.</p>
-<h2 id="roadmap">Roadmap<a class="headerlink" href="#roadmap" title="Permanent link">&para;</a></h2>
-<ul>
-<li>Service integration for systemd and Termux:Boot</li>
-<li>More messaging adapters</li>
-<li>Richer interfaces on top of the app gateway</li>
-<li>Promoting more ruff rules into the blocking lint gate</li>
-</ul>
-<h2 id="license">License<a class="headerlink" href="#license" title="Permanent link">&para;</a></h2>
-<p>MIT © 2026 Mftrferdinand</p>
+<p>Zeline is model-agnostic: OpenAI, OpenRouter, vLLM, Ollama, or any OpenAI- / Anthropic-compatible endpoint. Your models, your tools, your data.</p>
 
 
 
@@ -1474,11 +592,6 @@ with links to its pull requests.</p>
     <div class="md-footer-meta__inner md-grid">
       <div class="md-copyright">
   
-  
-    Made with
-    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
-      Material for MkDocs
-    </a>
   
 </div>
       
@@ -1544,7 +657,7 @@ with links to its pull requests.</p>
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "search.highlight", "content.code.copy"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["navigation.sections", "navigation.expand", "search.highlight", "content.code.copy"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
       <script src="assets/javascripts/bundle.d7400e89.min.js"></script>
