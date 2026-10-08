@@ -141,6 +141,32 @@ code, pre, .md-typeset code {
   text-transform: uppercase;
 }
 
-/* ---------- Hero image on home ---------- */
-.zeline-hero { text-align: center; margin: 0 auto 1.2em; }
-.zeline-hero img { width: 320px; max-width: 70%; height: auto; }
+/* ---------- Hero on home: navy card with white orbit mark ---------- */
+.zeline-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .6rem;
+  margin: 1.2em auto 2em;
+  padding: 1.6rem 1.2rem;
+  background: linear-gradient(180deg, #0a1568 0%, #060d3d 100%);
+  border-radius: 14px;
+  width: fit-content;
+  min-width: min(420px, 100%);
+}
+.zeline-hero img {
+  width: 120px;
+  height: auto;
+  display: block;
+}
+.zeline-hero-sub {
+  margin: 0;
+  color: #eef1ff;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 11.5px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  text-align: center;
+}
+.zeline-hero-sub a { color: #9db1ff; }
+.zeline-hero-sub a:hover { color: #eef1ff; }
