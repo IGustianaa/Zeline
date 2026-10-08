@@ -1,87 +1,139 @@
-/* Zeline docs — brand alignment with zeline.dev
-   Paper cream, cobalt blue, Inter Tight + JetBrains Mono */
+/* Zeline docs — brand: darknavy on paper (light) / readable deep-navy dark mode */
 
-:root {
-  --md-primary-fg-color: #1a2ec9;
-  --md-primary-bg-color: #f4f1ea;
-  --md-typeset-a-color: #0f1c8f;
-  --md-code-bg-color: #efeadf;
-  --md-default-bg-color: #f4f1ea;
-  --md-default-fg-color: #17161a;
-}
-
+/* ---------- LIGHT MODE: dark navy on paper cream ---------- */
+:root,
 [data-md-color-scheme="default"] {
-  --md-default-bg-color: #f4f1ea;
-  --md-primary-fg-color: #1a2ec9;
-  --md-primary-bg-color: #f4f1ea;
+  --zl-navy: #0a1568;        /* dark navy — main brand color */
+  --zl-navy-deep: #060d3d;
+  --zl-navy-soft: #12277e;
+
+  --md-default-bg-color: #f4f1ea;      /* paper cream from zeline.dev */
+  --md-default-fg-color: #17161a;
+  --md-primary-fg-color: #0a1568;      /* header/nav text on navy */
+  --md-primary-bg-color: #0a1568;      /* header bar = dark navy */
+  --md-accent-fg-color: #0a84ff;
+  --md-typeset-a-color: #12277e;       /* links: dark navy */
   --md-code-bg-color: #efeadf;
-  --md-typeset-a-color: #0f1c8f;
   --md-code-fg-color: #17161a;
 }
 
+/* ---------- DARK MODE: deep near-black navy, calm & readable ---------- */
 [data-md-color-scheme="slate"] {
-  --md-default-bg-color: #0c1568;
-  --md-primary-fg-color: #eef1ff;
-  --md-primary-bg-color: #0f1c8f;
-  --md-code-bg-color: #12228f;
-  --md-typeset-a-color: #7c93ff;
-  --md-code-fg-color: #eef1ff;
-  --md-default-fg-color: #eef1ff;
+  --md-default-bg-color: #0b0f1e;      /* near-black navy, NOT saturated blue */
+  --md-default-fg-color: #e3e7f4;      /* soft off-white text */
+  --md-primary-bg-color: #060b1c;      /* header darker than page */
+  --md-primary-fg-color: #e3e7f4;
+  --md-accent-fg-color: #7c9aff;
+  --md-typeset-a-color: #9db1ff;       /* periwinkle links, easy on eyes */
+  --md-code-bg-color: #111834;
+  --md-code-fg-color: #dfe4ff;
+  --md-default-fg-color--light: #aab3cc;
+  --md-default-fg-color--lighter: #7d88a8;
 }
 
+/* ---------- Base typography ---------- */
 body {
   font-family: "Inter Tight", system-ui, -apple-system, sans-serif !important;
 }
-
 code, pre, .md-typeset code {
   font-family: "JetBrains Mono", ui-monospace, monospace !important;
 }
-
 .md-typeset {
   font-size: .82rem;
   line-height: 1.62;
 }
+.md-typeset h1 { letter-spacing: -.01em; font-weight: 500; }
+.md-typeset h2 { font-weight: 500; letter-spacing: -.005em; }
+.md-typeset a { text-decoration: none; }
+.md-typeset a:hover { color: #0a84ff; }
 
-/* header bar: deep cobalt like the blue-zone on zeline.dev */
+/* ---------- Header: solid dark navy (was bright cobalt gradient) ---------- */
 .md-header {
-  background: linear-gradient(180deg, #1c34d6 0%, #0f1c8f 100%);
+  background: #0a1568;
   box-shadow: none;
 }
-
-/* nav sidebar paper tint, active item cobalt */
-.md-nav {
-  font-size: .74rem;
+[data-md-color-scheme="slate"] .md-header {
+  background: #060b1c;
 }
+
+/* ---------- Sidebar nav ---------- */
+.md-nav { font-size: .74rem; }
 .md-nav__item--active > .md-nav__link {
-  color: #1a2ec9;
+  color: #12277e;
   font-weight: 600;
 }
-
-/* hero logo block on home page */
-.md-header__logo { opacity: .95; }
-
-/* eyebrow-like section headers */
-.md-typeset h1 {
-  letter-spacing: -.01em;
-  font-weight: 500;
+[data-md-color-scheme="slate"] .md-nav__item--active > .md-nav__link {
+  color: #9db1ff;
 }
-.md-typeset h2 {
-  font-weight: 500;
-  letter-spacing: -.005em;
+[data-md-color-scheme="slate"] .md-nav__link {
+  color: #aab3cc;
+}
+[data-md-color-scheme="slate"] .md-nav__link:hover {
+  color: #e3e7f4;
 }
 
-/* links keep the ink feel, hover accent */
-.md-typeset a {
-  text-decoration: none;
+/* ---------- Tabs ---------- */
+.md-tabs { background: #060d3d; }
+[data-md-color-scheme="slate"] .md-tabs { background: #04081a; }
+.md-tabs__link { color: rgba(238,241,255,.75); }
+.md-tabs__link--active, .md-tabs__link:hover { color: #eef1ff; }
+
+/* ---------- Code blocks & inline code ---------- */
+.md-typeset code {
+  border-radius: 4px;
+  padding: .1em .35em;
 }
-.md-typeset a:hover {
-  color: #0A84FF;
+.md-typeset pre > code { border-radius: 8px; }
+
+/* dark mode: make sure code text is readable, not navy-on-navy */
+[data-md-color-scheme="slate"] .md-typeset code {
+  background-color: #111834;
+  color: #dfe4ff;
+}
+[data-md-color-scheme="slate"] .md-typeset pre {
+  color: #dfe4ff;
 }
 
-/* footer align with lab site */
-.md-footer {
-  background: #0a1568;
+/* ---------- Tables: soft lines, readable in both modes ---------- */
+.md-typeset table:not([class]) {
+  border-collapse: collapse;
 }
+.md-typeset table:not([class]) th {
+  background: rgba(10, 21, 104, .08);
+  color: #0a1568;
+}
+[data-md-color-scheme="slate"] .md-typeset table:not([class]) th {
+  background: rgba(124, 154, 255, .10);
+  color: #e3e7f4;
+}
+.md-typeset table:not([class]) td {
+  border-top: 1px solid #e2ddd0;
+}
+[data-md-color-scheme="slate"] .md-typeset table:not([class]) td {
+  border-top: 1px solid #1e2748;
+}
+
+/* ---------- Admonitions & details ---------- */
+.md-typeset .admonition,
+.md-typeset details {
+  border-radius: 10px;
+  box-shadow: none;
+  border: 1px solid #e2ddd0;
+}
+[data-md-color-scheme="slate"] .md-typeset .admonition,
+[data-md-color-scheme="slate"] .md-typeset details {
+  border: 1px solid #1e2748;
+  background-color: #0d1326;
+}
+
+/* ---------- Search overlay ---------- */
+[data-md-color-scheme="slate"] .md-search__form {
+  background: #060b1c;
+}
+
+/* ---------- Footer ---------- */
+.md-footer { background: #060d3d; }
+[data-md-color-scheme="slate"] .md-footer { background: #04081a; }
 .md-footer-meta {
   font-family: "JetBrains Mono", monospace;
   font-size: 11px;
@@ -89,36 +141,6 @@ code, pre, .md-typeset code {
   text-transform: uppercase;
 }
 
-/* admonitions get a softer paper border */
-.md-typeset .admonition,
-.md-typeset details {
-  border-radius: 10px;
-  box-shadow: none;
-  border: 1px solid #e2ddd0;
-}
-
-/* social row in footer meta */
-.zeline-social {
-  display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
-  padding: 8px 0;
-  font-family: "JetBrains Mono", monospace;
-  font-size: 11px;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-}
-.zeline-social a {
-  color: #9fb0ff !important;
-}
-
-/* hero image on home */
-.zeline-hero {
-  text-align: center;
-  margin: 0 auto 1.2em;
-}
-.zeline-hero img {
-  width: 320px;
-  max-width: 70%;
-  height: auto;
-}
+/* ---------- Hero image on home ---------- */
+.zeline-hero { text-align: center; margin: 0 auto 1.2em; }
+.zeline-hero img { width: 320px; max-width: 70%; height: auto; }
